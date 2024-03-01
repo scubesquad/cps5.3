@@ -1,0 +1,53 @@
+ALTER TABLE `tb_branchdetails` ADD `branch_sub_code` VARCHAR(10) NULL DEFAULT NULL AFTER `branch_code`;
+
+
+
+
+ALTER TABLE `tb_uploadingdata` CHANGE `cps_act_name` `cps_act_name` VARCHAR(55) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+
+ALTER TABLE `tb_print_req_collection` CHANGE `cps_act_name` `cps_act_name` VARCHAR(55) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+
+ALTER TABLE `tb_reprint_req_collection` CHANGE `cps_act_name` `cps_act_name` VARCHAR(55) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+
+ALTER TABLE `tb_printque` CHANGE `cps_act_name` `cps_act_name` VARCHAR(55) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+
+ALTER TABLE `tb_pending_print_req` CHANGE `cps_act_name` `cps_act_name` VARCHAR(55) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+
+ALTER TABLE `tb_cps_reprintque` CHANGE `cps_act_name` `cps_act_name` VARCHAR(55) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+
+
+ALTER TABLE `tb_uploadingdata` CHANGE `cps_act_jointname1` `cps_act_jointname1` VARCHAR(55) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+
+ALTER TABLE `tb_print_req_collection` CHANGE `cps_act_jointname1` `cps_act_jointname1` VARCHAR(55) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+
+ALTER TABLE `tb_reprint_req_collection` CHANGE `cps_act_jointname1` `cps_act_jointname1` VARCHAR(55) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+
+ALTER TABLE `tb_printque` CHANGE `cps_act_jointname1` `cps_act_jointname1` VARCHAR(55) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+
+ALTER TABLE `tb_pending_print_req` CHANGE `cps_act_jointname1` `cps_act_jointname1` VARCHAR(55) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+
+ALTER TABLE `tb_cps_reprintque` CHANGE `cps_act_jointname1` `cps_act_jointname1` VARCHAR(55) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+
+
+ALTER TABLE `tb_uploadingdata` CHANGE `cps_act_jointname2` `cps_act_jointname2` VARCHAR(55) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+
+ALTER TABLE `tb_print_req_collection` CHANGE `cps_act_jointname2` `cps_act_jointname2` VARCHAR(55) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+
+ALTER TABLE `tb_reprint_req_collection` CHANGE `cps_act_jointname2` `cps_act_jointname2` VARCHAR(55) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+
+ALTER TABLE `tb_printque` CHANGE `cps_act_jointname2` `cps_act_jointname2` VARCHAR(55) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+
+ALTER TABLE `tb_pending_print_req` CHANGE `cps_act_jointname2` `cps_act_jointname2` VARCHAR(55) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+
+ALTER TABLE `tb_cps_reprintque` CHANGE `cps_act_jointname2` `cps_act_jointname2` VARCHAR(55) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+
+
+
+ALTER TABLE `tb_uploadingdata` ADD `branch_sub_code` VARCHAR(10) NULL DEFAULT NULL AFTER `cps_product_code`;
+ALTER TABLE `tb_print_req_collection` ADD `branch_sub_code` VARCHAR(10) NULL DEFAULT NULL AFTER `cps_product_code`;
+ALTER TABLE `tb_reprint_req_collection` ADD `branch_sub_code` VARCHAR(10) NULL DEFAULT NULL AFTER `cps_product_code`;
+ALTER TABLE `tb_printque` ADD `branch_sub_code` VARCHAR(10) NULL DEFAULT NULL AFTER `cps_product_code`;
+ALTER TABLE `tb_pending_print_req` ADD `branch_sub_code` VARCHAR(10) NULL DEFAULT NULL AFTER `cps_product_code`;
+ALTER TABLE `tb_cps_reprintque` ADD `branch_sub_code` VARCHAR(10) NULL DEFAULT NULL AFTER `cps_product_code`;
+
+ALTER TABLE `tb_cps_chequeseries` ADD `branch_sub_code` VARCHAR(10) NULL DEFAULT NULL AFTER `serise_Bank`;
