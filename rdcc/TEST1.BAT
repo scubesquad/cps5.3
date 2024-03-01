@@ -1,0 +1,10 @@
+@echo off
+gsbatchprintc -P "HP LaserJet 400 M401 PCL 6 (Copy 1)" -F "Slip_1" -I "Tray 1"
+gsbatchprintc -P "HP LaserJet 400 M401 PCL 6 (Copy 1)" -F "Cheque.pdf" -I "Tray 2"
+gsbatchprintc -P "HP LaserJet 400 M401 PCL 6 (Copy 1)" -F "Cheque.pdf" -I "Tray 2"
+gsbatchprintc -P "HP LaserJet 400 M401 PCL 6 (Copy 1)" -F "Cheque.pdf" -I "Tray 2"
+gsbatchprintc -P "HP LaserJet 400 M401 PCL 6 (Copy 1)" -F "Cheque.pdf" -I "Tray 2"
+gsbatchprintc -P "HP LaserJet 400 M401 PCL 6 (Copy 1)" -F "Cheque_1.pdf" -I "Tray 2"
+gsbatchprintc -P "HP LaserJet 400 M401 PCL 6 (Copy 1)" -F "Cheque_1.pdf" -I "Tray 2"
+gsbatchprintc -P "HP LaserJet 400 M401 PCL 6 (Copy 1)" -F "Cheque_1.pdf" -I "Tray 2"
+gsbatchprintc -P "HP LaserJet 400 M401 PCL 6 (Copy 1)" -F "Cheque_1.pdf" -I "Tray 2"

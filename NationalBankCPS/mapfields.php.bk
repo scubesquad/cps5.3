@@ -1,0 +1,615 @@
+<?php 
+	require_once('global.php');	
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<?php include('includes.php'); ?>
+<link rel="stylesheet" href="css/stylecss.css" type="text/css" />
+<script type="text/javascript" src="scripts/dropdowntabs.js"></script>
+
+</head>
+
+<body>
+
+<div id="topdivlogo">
+	<div id="titlediv">Cheque Personalization System</div>
+	</div>
+	<div id="innerpage-maindiv">
+
+		<div class="middle-maindiv">
+			<div class="middlesubdiv">
+				
+				<div id="formdiv">
+					<div id="formheading">Input File Details</div>
+					<div id="formfields">
+						<table width="100%%" border="0" cellspacing="0" cellpadding="0" style="border:1px solid; border-color:#cccccc;">
+							<tr>
+								<td align="left" style="width:40%" valign="top" style="padding-left:16px; padding-top:16px;">
+									<table width="100%" border="0" cellspacing="0" cellpadding="0">
+										<tr>
+											<th>
+												Sr no
+											</th>
+											<th>
+												Field Name
+											</th>
+											<th>
+												Data Type
+											</th>
+											<th>
+												Length
+											</th>
+											<th>
+												Bank Field Name
+											</th>
+											<th>
+												Bank Data Type
+											</th>
+											<th>
+												Length
+											</th>
+										</tr>
+										<tr>
+											<td align="left" valign="top"><label>1)</label></td>
+											<td align="left" valign="top"><label>Unique Request No</label></td>
+											<td align="left" valign="top"><label>Numeric</label></td>
+											<td height="35" align="left" valign="top"><label>15</label></td>
+											<td align="left" valign="top"><input type="text" name="txtUniqueRequestNo" id="txtUniqueRequestNo" style="width:150px;" /></td>
+											<td align="left" valign="top">
+												<select id="ddlUniqueRequestNo" name="ddlUniqueRequestNo" style="width:100px;">
+													<option value="V">Varchar</option>
+													<option value="N">Numeric</option>
+													<option value="D">Date</option>
+												</select>
+											</td>
+											<td height="35" align="left" valign="top"><label><input type="text" name="txtUniqueRequestNoLength" id="txtUniqueRequestNoLength" style="width:20px;" /></label></td>
+										</tr>
+										<tr>
+											<td align="left" valign="top"><label>1 a)</label></td>
+											<td align="left" valign="top"><label>Effective Date</label></td>
+											<td align="left" valign="top"><label>Date</label></td>
+											<td height="35" align="left" valign="top"><label>10</label></td>
+											<td height="35" align="left" valign="top"><input type="text" name="txtEffectiveDate" id="txtEffectiveDate" style="width:220px;" /></td>
+											<td align="left" valign="top">
+												<select id="ddlEffectiveDate" name="ddlEffectiveDate" style="width:100px;">
+													<option value="V">Varchar</option>
+													<option value="N">Numeric</option>
+													<option value="D">Date</option>
+												</select>
+											</td>
+											<td height="35" align="left" valign="top"><label><input type="text" name="txtEffectiveDateLength" id="txtEffectiveDateLength" style="width:20px;" /></label></td>
+										</tr>
+										<tr>	
+											<td align="left" valign="top"><label>2)</label></td>
+											<td align="left" valign="top"><label>Bank Code</label></td>
+											<td align="left" valign="top"><label>Numeric</label></td>
+											<td height="35" align="left" valign="top"><label>3</label></td>
+											<td align="left" valign="top"><input type="text" name="txtBankCode" id="txtBankCode" style="width:220px;" /></td>
+											<td align="left" valign="top">
+												<select id="ddlBankCode" name="ddlBankCode" style="width:100px;">
+													<option value="V">Varchar</option>
+													<option value="N">Numeric</option>
+													<option value="D">Date</option>
+												</select>
+											</td>
+											<td height="35" align="left" valign="top"><label><input type="text" name="txtBankCodeLength" id="txtBankCodeLength" style="width:20px;" /></label></td>
+
+										</tr>
+										<tr>
+											<td align="left" valign="top"><label>3)</label></td>
+											<td align="left" valign="top"><label>Branch Code</label></td>
+											<td align="left" valign="top"><label>Numeric</label></td>
+											<td height="35" align="left" valign="top"><label>3</label></td>
+											<td height="35" align="left" valign="top"><input type="text" name="txtBranchCode" id="txtBranchCode" style="width:220px;" /></td>
+											<td align="left" valign="top">
+												<select id="ddlBranchCode" name="ddlBranchCode" style="width:100px;">
+													<option value="V">Varchar</option>
+													<option value="N">Numeric</option>
+													<option value="D">Date</option>
+												</select>
+											</td>
+											<td height="35" align="left" valign="top"><label><input type="text" name="txtBranchCodeLength" id="txtBranchCodeLength" style="width:20px;" /></label></td>
+										</tr> 
+										<tr>
+											<td align="left" valign="top"><label>4)</label></td>
+											<td align="left" valign="top"><label>City Code</label></td>
+											<td align="left" valign="top"><label>Numeric</label></td>
+											<td height="35" align="left" valign="top"><label>3</label></td>
+											<td height="35" align="left" valign="top"><input type="text" name="txtCity" id="txtCity" style="width:220px;" /></td>
+											<td align="left" valign="top">
+												<select id="ddlCity" name="ddlCity" style="width:100px;">
+													<option value="V">Varchar</option>
+													<option value="N">Numeric</option>
+													<option value="D">Date</option>
+												</select>
+											</td>
+											<td height="35" align="left" valign="top"><label><input type="text" name="txtCityLength" id="txtCityLength" style="width:20px;" /></label></td>
+										</tr>
+										<tr>
+											<td align="left" valign="top"><label>5)</label></td>
+											<td align="left" valign="top"><label>Account No</label></td>
+											<td align="left" valign="top"><label>Numeric</label></td>
+											<td height="35" align="left" valign="top"><label>15</label></td>
+											<td align="left" valign="top"><input type="text" name="txtaccountno" id="txtaccountno" style="width:220px;" /></td>
+											<td align="left" valign="top">
+												<select id="ddlaccountno" name="ddlaccountno" style="width:100px;">
+													<option value="V">Varchar</option>
+													<option value="N">Numeric</option>
+													<option value="D">Date</option>
+												</select>
+											</td>
+											<td height="35" align="left" valign="top"><label><input type="text" name="txtaccountnoLength" id="txtaccountnoLength" style="width:20px;" /></label></td>
+										</tr>
+										<tr>
+											<td align="left" valign="top"><label>6)</label></td>	
+											<td align="left" valign="top"><label>Branch Id</label></td>
+											<td align="left" valign="top"><label>Numeric</label></td>
+											<td height="35" align="left" valign="top"><label>5</label></td>
+											<td align="left" valign="top"><input type="text" name="txtBranchID" id="txtBranchID" style="width:220px;" /></td>
+											<td align="left" valign="top">
+												<select id="ddlBranchID" name="ddlBranchID" style="width:100px;">
+													<option value="V">Varchar</option>
+													<option value="N">Numeric</option>
+													<option value="D">Date</option>
+												</select>
+											</td>
+											<td height="35" align="left" valign="top"><label><input type="text" name="txtBranchIDLength" id="txtBranchIDLength" style="width:20px;" /></label></td>
+										</tr>
+										<tr>
+											<td align="left" valign="top"><label>7)</label></td>	
+											<td align="left" valign="top"><label>MICR Acc No</label></td>
+											<td align="left" valign="top"><label>Numeric</label></td>
+											<td height="35" align="left" valign="top"><label>6</label></td>
+											<td height="35" align="left" valign="top"><input type="text" name="txtMicrAccNo" id="txtMicrAccNo" style="width:220px;" /></td>
+											<td align="left" valign="top">
+												<select id="ddlMicrAccNo" name="ddlMicrAccNo" style="width:100px;">
+													<option value="V">Varchar</option>
+													<option value="N">Numeric</option>
+													<option value="D">Date</option>
+												</select>
+											</td>
+											<td height="35" align="left" valign="top"><label><input type="text" name="txtMicrAccNoLength" id="txtMicrAccNoLength" style="width:20px;" /></label></td>
+										</tr>
+										<tr>	
+											<td align="left" valign="top"><label>8)</label></td>	
+											<td align="left" valign="top"><label>Customer Name</label></td>
+											<td align="left" valign="top"><label>Varchar</label></td>
+											<td height="35" align="left" valign="top"><label>35</label></td>
+											<td height="35" align="left" valign="top"><input type="text" name="txtCustName" id="txtCustName" style="width:220px;" /></td>
+											<td align="left" valign="top">
+												<select id="ddlCustName" name="ddlCustName" style="width:100px;">
+													<option value="V">Varchar</option>
+													<option value="N">Numeric</option>
+													<option value="D">Date</option>
+												</select>
+											</td>
+											<td height="35" align="left" valign="top"><label><input type="text" name="txtCustNameLength" id="txtCustNameLength" style="width:20px;" /></label></td>
+										</tr>
+										<tr>
+											<td align="left" valign="top"><label>9)</label></td>	
+											<td align="left" valign="top"><label>No of Books</label></td>
+											<td align="left" valign="top"><label>Numeric</label></td>
+											<td height="35" align="left" valign="top"><label>3</label></td>
+											<td align="left" valign="top"><input type="text" name="txtNoofBooks" id="txtNoofBooks" style="width:220px;" /></td>
+											<td align="left" valign="top">
+												<select id="ddlNoofBooks" name="ddlNoofBooks" style="width:100px;">
+													<option value="V">Varchar</option>
+													<option value="N">Numeric</option>
+													<option value="D">Date</option>
+												</select>
+											</td>
+											<td height="35" align="left" valign="top"><label><input type="text" name="txtNoofBooksLength" id="txtNoofBooksLength" style="width:20px;" /></label></td>
+										</tr>
+										<tr>
+											<td align="left" valign="top"><label>10)</label></td>	
+											<td align="left" valign="top"><label>Bearer/Order</label></td>
+											<td align="left" valign="top"><label>Varchar</label></td>
+											<td height="35" align="left" valign="top"><label>1</label></td>
+											<td align="left" valign="top"><input type="text" name="txtBearerOrder" id="txtBearerOrder" style="width:220px;" /></td>
+											<td align="left" valign="top">
+												<select id="ddlBearerOrder" name="ddlBearerOrder" style="width:100px;">
+													<option value="V">Varchar</option>
+													<option value="N">Numeric</option>
+													<option value="D">Date</option>
+												</select>
+											</td>
+											<td height="35" align="left" valign="top"><label><input type="text" name="txtBearerOrderLength" id="txtBearerOrderLength" style="width:20px;" /></label></td>
+										</tr>
+										<tr>
+											<td align="left" valign="top"><label>11)</label></td>	
+											<td align="left" valign="top"><label>Book Size</label></td>
+											<td align="left" valign="top"><label>Numeric</label></td>
+											<td height="35" align="left" valign="top"><label>3</label></td>
+											<td height="35" align="left" valign="top"><input type="text" name="txtBookSize" id="txtBookSize" style="width:220px;" /></td>
+											<td align="left" valign="top">
+												<select id="ddlBookSize" name="ddlBookSize" style="width:100px;">
+													<option value="V">Varchar</option>
+													<option value="N">Numeric</option>
+													<option value="D">Date</option>
+												</select>
+											</td>
+											<td height="35" align="left" valign="top"><label><input type="text" name="txtBookSizeLength" id="txtBookSizeLength" style="width:20px;" /></label></td>
+										</tr>
+										<tr>
+											<td align="left" valign="top"><label>11 a)</label></td>	
+											<td align="left" valign="top"><label>Tr Code</label></td>
+											<td align="left" valign="top"><label>Numeric</label></td>
+											<td height="35" align="left" valign="top"><label>2</label></td>
+											<td align="left" valign="top" height="35"><input type="text" name="txtTrCode" id="txtTrCode" style="width:220px;" /></td>
+											<td align="left" valign="top">
+												<select id="ddlTrCode" name="ddlTrCode" style="width:100px;">
+													<option value="V">Varchar</option>
+													<option value="N">Numeric</option>
+													<option value="D">Date</option>
+												</select>
+											</td>
+											<td height="35" align="left" valign="top"><label><input type="text" name="txtTrCodeLength" id="txtTrCodeLength" style="width:20px;" /></label></td>
+										</tr>
+										<tr>
+											<td align="left" valign="top"><label>12)</label></td>	
+											<td align="left" valign="top"><label>At Par</label></td>
+											<td align="left" valign="top"><label>Numeric</label></td>
+											<td height="35" align="left" valign="top"><label>1</label></td>
+											<td height="35" align="left" valign="top"><input type="text" name="txtAtPar" id="txtAtPar" style="width:220px;" /></td>
+											<td align="left" valign="top">
+												<select id="ddlAtPar" name="ddlAtPar" style="width:100px;">
+													<option value="V">Varchar</option>
+													<option value="N">Numeric</option>
+													<option value="D">Date</option>
+												</select>
+											</td>
+											<td height="35" align="left" valign="top"><label><input type="text" name="txtAtParLength" id="txtAtParLength" style="width:20px;" /></label></td>
+										</tr>
+										
+										<tr>
+											<td align="left" valign="top"><label>13)</label></td>	
+											<td align="left" valign="top"><label>Joint Name 1</label></td>
+											<td align="left" valign="top"><label>Varchar</label></td>
+											<td height="35" align="left" valign="top"><label>35</label></td>
+											<td align="left" valign="top"><input type="text" name="txtJointName1" id="txtJointName1" style="width:220px;" /></td>
+											<td align="left" valign="top">
+												<select id="ddlJointName1" name="ddlJointName1" style="width:100px;">
+													<option value="V">Varchar</option>
+													<option value="N">Numeric</option>
+													<option value="D">Date</option>
+												</select>
+											</td>
+											<td height="35" align="left" valign="top"><label><input type="text" name="txtJointName1Length" id="txtJointName1Length" style="width:20px;" /></label></td>
+										</tr>
+										<tr>
+											<td align="left" valign="top"><label>14)</label></td>	
+											<td align="left" valign="top"><label>Joint Name 2</label></td>
+											<td align="left" valign="top"><label>Varchar</label></td>
+											<td height="35" align="left" valign="top"><label>35</label></td>
+											<td height="35" align="left" valign="top"><input type="text" name="txtJointName2" id="txtJointName2" style="width:220px;" /></td>
+											<td align="left" valign="top">
+												<select id="ddlJointName2" name="ddlJointName2" style="width:100px;">
+													<option value="V">Varchar</option>
+													<option value="N">Numeric</option>
+													<option value="D">Date</option>
+												</select>
+											</td>
+											<td height="35" align="left" valign="top"><label><input type="text" name="txtJointName2Length" id="txtJointName2Length" style="width:20px;" /></label></td>
+										</tr>
+										<tr>
+											<td align="left" valign="top"><label>15)</label></td>	
+											<td align="left" valign="top"><label>Signatory 1</label></td>
+											<td align="left" valign="top"><label>Varchar</label></td>
+											<td height="35" align="left" valign="top"><label>35</label></td>
+											<td height="35" align="left" valign="top"><input type="text" name="txtSignatory1" id="txtSignatory1" style="width:220px;" /></td>
+											
+											<td align="left" valign="top">
+												<select id="ddlSignatory1" name="ddlSignatory1" style="width:100px;">
+													<option value="V">Varchar</option>
+													<option value="N">Numeric</option>
+													<option value="D">Date</option>
+												</select>
+											</td>
+											<td height="35" align="left" valign="top"><label><input type="text" name="txtSignatory1Length" id="txtSignatory1Length" style="width:20px;" /></label></td>
+										</tr>
+										<tr>
+											<td align="left" valign="top"><label>16)</label></td>		
+											<td align="left" valign="top"><label>Signatory 2</label></td>
+											<td align="left" valign="top"><label>Varchar</label></td>
+											<td height="35" align="left" valign="top"><label>35</label></td>
+											<td align="left" valign="top"><input type="text" name="txtSignatory2" id="txtSignatory2" style="width:220px;" /></td>
+											<td align="left" valign="top">
+												<select id="ddlSignatory2" name="ddlSignatory2" style="width:100px;">
+													<option value="V">Varchar</option>
+													<option value="N">Numeric</option>
+													<option value="D">Date</option>
+												</select>
+											</td>
+											<td height="35" align="left" valign="top"><label><input type="text" name="txtSignatory2Length" id="txtSignatory2Length" style="width:20px;" /></label></td>
+										</tr>
+										<tr>
+											<td align="left" valign="top"><label>17)</label></td>		
+											<td align="left" valign="top"><label>Signatory 3</label></td>
+											<td align="left" valign="top"><label>Varchar</label></td>
+											<td height="35" align="left" valign="top"><label>35</label></td>
+											<td height="35" align="left" valign="top"><input type="text" name="txtSignatory3" id="txtSignatory3" style="width:220px;" /></td>
+											<td align="left" valign="top">
+												<select id="ddlSignatory3" name="ddlSignatory3" style="width:100px;">
+													<option value="V">Varchar</option>
+													<option value="N">Numeric</option>
+													<option value="D">Date</option>
+												</select>
+											</td>
+											<td height="35" align="left" valign="top"><label><input type="text" name="txtSignatory3Length" id="txtSignatory3Length" style="width:20px;" /></label></td>
+										</tr>
+										<tr>
+											<td align="left" valign="top"><label>18)</label></td>		
+											<td align="left" valign="top"><label>Address 1</label></td>
+											<td align="left" valign="top"><label>Varchar</label></td>
+											<td height="35" align="left" valign="top"><label>50</label></td>
+											<td align="left" valign="top"><input type="text" name="txtAddress1" id="txtAddress1" style="width:220px;" /></td>
+											<td align="left" valign="top">
+												<select id="ddlAddress1" name="ddlAddress1" style="width:100px;">
+													<option value="V">Varchar</option>
+													<option value="N">Numeric</option>
+													<option value="D">Date</option>
+												</select>
+											</td>
+											<td height="35" align="left" valign="top"><label><input type="text" name="txtAddress1Length" id="txtAddress1Length" style="width:20px;" /></label></td>
+										</tr>
+										<tr>
+											<td align="left" valign="top"><label>19)</label></td>
+											<td align="left" valign="top"><label>Address 2</label></td>
+											<td align="left" valign="top"><label>Varchar</label></td>
+											<td height="35" align="left" valign="top"><label>50</label></td>
+											<td height="35" align="left" valign="top"><input type="text" name="txtAddress2" id="txtAddress2" style="width:220px;" /></td>
+											<td align="left" valign="top">
+												<select id="ddlAddress2" name="ddlAddress2" style="width:100px;">
+													<option value="V">Varchar</option>
+													<option value="N">Numeric</option>
+													<option value="D">Date</option>
+												</select>
+											</td>
+											<td height="35" align="left" valign="top"><label><input type="text" name="txtAddress2Length" id="txtAddress2Length" style="width:20px;" /></label></td>
+										</tr>
+										<tr>
+											<td align="left" valign="top"><label>20)</label></td>	
+											<td align="left" valign="top"><label>Address 3</label></td>
+											<td align="left" valign="top"><label>Varchar</label></td>
+											<td height="35" align="left" valign="top"><label>50</label></td>
+											<td align="left" valign="top"><input type="text" name="txtAddress3" id="txtAddress3" style="width:220px;" /></td>
+											<td align="left" valign="top">
+												<select id="ddlAddress3" name="ddlAddress3" style="width:100px;">
+													<option value="V">Varchar</option>
+													<option value="N">Numeric</option>
+													<option value="D">Date</option>
+												</select>
+											</td>
+											<td height="35" align="left" valign="top"><label><input type="text" name="txtAddress3Length" id="txtAddress3Length" style="width:20px;" /></label></td>
+										</tr>
+										<tr>
+											<td align="left" valign="top"><label>21)</label></td>	
+											<td align="left" valign="top"><label>Address 4</label></td>
+											<td align="left" valign="top"><label>Varchar</label></td>
+											<td height="35" align="left" valign="top"><label>50</label></td>
+											<td height="35" align="left" valign="top"><input type="text" name="txtAddress4" id="txtAddress4" style="width:220px;" /></td>
+											<td align="left" valign="top">
+												<select id="ddlAddress4" name="ddlAddress4" style="width:100px;">
+													<option value="V">Varchar</option>
+													<option value="N">Numeric</option>
+													<option value="D">Date</option>
+												</select>
+											</td>
+											<td height="35" align="left" valign="top"><label><input type="text" name="txtAddress4Length" id="txtAddress4Length" style="width:20px;" /></label></td>
+										</tr>
+										<tr>
+											<td align="left" valign="top"><label>22)</label></td>	
+											<td align="left" valign="top"><label>Address 5</label></td>
+											<td align="left" valign="top"><label>Varchar</label></td>
+											<td height="35" align="left" valign="top"><label>50</label></td>
+											<td align="left" valign="top"><input type="text" name="txtAddress5" id="txtAddress5" style="width:220px;" /></td>
+											<td align="left" valign="top">
+												<select id="ddlAddress5" name="ddlAddress5" style="width:100px;">
+													<option value="V">Varchar</option>
+													<option value="N">Numeric</option>
+													<option value="D">Date</option>
+												</select>
+											</td>
+											<td height="35" align="left" valign="top"><label><input type="text" name="txtAddress5Length" id="txtAddress5Length" style="width:20px;" /></label></td>
+										</tr>
+										
+										<tr>
+											<td align="left" valign="top"><label>23)</label></td>	
+											<td align="left" valign="top"><label>City</label></td>
+											<td align="left" valign="top"><label>Varchar</label></td>
+											<td height="35" align="left" valign="top"><label>30</label></td>
+											<td height="35" align="left" valign="top"><input type="text" name="txtCity" id="txtCity" style="width:220px;" /></td>
+											<td align="left" valign="top">
+												<select id="ddlCity" name="ddlCity" style="width:100px;">
+													<option value="V">Varchar</option>
+													<option value="N">Numeric</option>
+													<option value="D">Date</option>
+												</select>
+											</td>
+											<td height="35" align="left" valign="top"><label><input type="text" name="txtCityLength" id="txtCityLength" style="width:20px;" /></label></td>
+										</tr>
+										<tr>
+											<td align="left" valign="top"><label>24)</label></td>	
+											<td align="left" valign="top"><label>State</label></td>
+											<td align="left" valign="top"><label>Varchar</label></td>
+											<td height="35" align="left" valign="top"><label>30</label></td>
+											<td height="35" align="left" valign="top"><input type="text" name="txtState" id="txtState" style="width:220px;" /></td>
+											<td align="left" valign="top">
+												<select id="ddlState" name="ddlState" style="width:100px;">
+													<option value="V">Varchar</option>
+													<option value="N">Numeric</option>
+													<option value="D">Date</option>
+												</select>
+											</td>
+											<td height="35" align="left" valign="top"><label><input type="text" name="txtStateLength" id="txtStateLength" style="width:20px;" /></label></td>
+										</tr>
+										<tr>
+											<td align="left" valign="top"><label>25)</label></td>	
+											<td align="left" valign="top"><label>Country</label></td>
+											<td align="left" valign="top"><label>Varchar</label></td>
+											<td height="35" align="left" valign="top"><label>30</label></td>
+											<td align="left" valign="top"><input type="text" name="txtCountry" id="txtCountry" style="width:220px;" /></td>
+											<td align="left" valign="top">
+												<select id="ddlCountry" name="ddlCountry" style="width:100px;">
+													<option value="V">Varchar</option>
+													<option value="N">Numeric</option>
+													<option value="D">Date</option>
+												</select>
+											</td>
+											<td height="35" align="left" valign="top"><label><input type="text" name="txtCountryLength" id="txtCountryLength" style="width:20px;" /></label></td>
+										</tr>
+										<tr>
+											<td align="left" valign="top"><label>26)</label></td>
+											<td align="left" valign="top"><label>Email Id</label></td>
+											<td align="left" valign="top"><label>Varchar</label></td>
+											<td height="35" align="left" valign="top"><label>50</label></td>
+											<td height="35" align="left" valign="top"><input type="text" name="txtEmailId" id="txtEmailId" style="width:220px;" /></td>
+											<td align="left" valign="top">
+												<select id="ddlEmailId" name="ddlEmailId" style="width:100px;">
+													<option value="V">Varchar</option>
+													<option value="N">Numeric</option>
+													<option value="D">Date</option>
+												</select>
+											</td>
+											<td height="35" align="left" valign="top"><label><input type="text" name="txtEmailIdLength" id="txtEmailIdLength" style="width:20px;" /></label></td>
+										</tr>
+										<tr>
+											<td align="left" valign="top"><label>27)</label></td>		
+											<td align="left" valign="top"><label>Pin</label></td>
+											<td align="left" valign="top"><label>Varchar</label></td>
+											<td height="35" align="left" valign="top"><label>30</label></td>
+											<td align="left" valign="top"><input type="text" name="txtPin" id="txtPin" style="width:220px;" /></td>
+											<td align="left" valign="top">
+												<select id="ddlPin" name="ddlPin" style="width:100px;">
+													<option value="V">Varchar</option>
+													<option value="N">Numeric</option>
+													<option value="D">Date</option>
+												</select>
+											</td>
+											<td height="35" align="left" valign="top"><label><input type="text" name="txtPinLength" id="txtPinLength" style="width:20px;" /></label></td>
+										</tr>
+										<tr>
+											<td align="left" valign="top"><label>28)</label></td>	
+											<td align="left" valign="top"><label>Telephone Res</label></td>
+											<td align="left" valign="top"><label>Numeric</label></td>
+											<td height="35" align="left" valign="top"><label>15</label></td>
+											<td height="35" align="left" valign="top"><input type="text" name="txtTelephoneRes" id="txtTelephoneRes" style="width:220px;" /></td>
+											<td align="left" valign="top">
+												<select id="ddlTelephoneRes" name="ddlTelephoneRes" style="width:100px;">
+													<option value="V">Varchar</option>
+													<option value="N">Numeric</option>
+													<option value="D">Date</option>
+												</select>
+											</td>
+											<td height="35" align="left" valign="top"><label><input type="text" name="txtTelephoneResLength" id="txtTelephoneResLength" style="width:20px;" /></label></td>
+										</tr>
+										<tr>
+											<td align="left" valign="top"><label>29)</label></td>	
+											<td align="left" valign="top"><label>Telephone Off</label></td>
+											<td align="left" valign="top"><label>Numeric</label></td>
+											<td height="35" align="left" valign="top"><label>15</label></td>
+											<td align="left" valign="top"><input type="text" name="txtTelephoneOff" id="txtTelephoneOff" style="width:220px;" /></td>
+											<td align="left" valign="top">
+												<select id="ddlTelephoneOff" name="ddlTelephoneOff" style="width:100px;">
+													<option value="V">Varchar</option>
+													<option value="N">Numeric</option>
+													<option value="D">Date</option>
+												</select>
+											</td>
+											<td height="35" align="left" valign="top"><label><input type="text" name="txtTelephoneOffLength" id="txtTelephoneOffLength" style="width:20px;" /></label></td>
+										</tr>
+										<tr>
+											<td align="left" valign="top"><label>30)</label></td>	
+											<td align="left" valign="top"><label>Mobile</label></td>
+											<td align="left" valign="top"><label>Numeric</label></td>
+											<td height="35" align="left" valign="top"><label>15</label></td>
+											<td height="35" align="left" valign="top"><input type="text" name="txtMobile" id="txtMobile" style="width:220px;" /></td>
+											<td align="left" valign="top">
+												<select id="ddlMobile" name="ddlMobile" style="width:100px;">
+													<option value="V">Varchar</option>
+													<option value="N">Numeric</option>
+													<option value="D">Date</option>
+												</select>
+											</td>
+											<td height="35" align="left" valign="top"><label><input type="text" name="txtMobileLength" id="txtMobileLength" style="width:20px;" /></label></td>
+										</tr>
+										<tr>
+											<td align="left" valign="top"><label>30 a)</label></td>
+											<td align="left" valign="top"><label>IFSC/NEFT/RTGS Code</label></td>
+											<td align="left" valign="top"><label>Varchar</label></td>
+											<td height="35" align="left" valign="top"><label>12</label></td>
+											<td align="left" valign="top"><input type="text" name="txtIFSCCode" id="txtIFSCCode" style="width:220px;" /></td>
+											<td align="left" valign="top">
+												<select id="ddlMobile" name="ddlMobile" style="width:100px;">
+													<option value="V">Varchar</option>
+													<option value="N">Numeric</option>
+													<option value="D">Date</option>
+												</select>
+											</td>
+											<td height="35" align="left" valign="top"><label><input type="text" name="txtMobileLength" id="txtMobileLength" style="width:20px;" /></label></td>
+										</tr>
+										<tr>
+											<td align="left" valign="top"><label>31</label></td>
+											<td align="left" valign="top"><label>Cheque To</label></td>
+											<td align="left" valign="top"><label>Numeric</label></td>
+											<td height="35" align="left" valign="top"><label>6</label></td>
+											<td align="left" valign="top"><input type="text" name="txtChequeTo" id="txtChequeTo" style="width:220px;" /></td>
+											<td align="left" valign="top">
+												<select id="ddlChequeTo" name="ddlChequeTo" style="width:100px;">
+													<option value="V">Varchar</option>
+													<option value="N">Numeric</option>
+													<option value="D">Date</option>
+												</select>
+											</td>
+											<td height="35" align="left" valign="top"><label><input type="text" name="txtChequeToLength" id="txtChequeToLength" style="width:20px;" /></label></td>
+										</tr>
+										<tr>
+											<td align="left" valign="top"><label>32</label></td>
+											<td align="left" valign="top"><label>Cheque Form</label></td>
+											<td align="left" valign="top"><label>Numeric</label></td>
+											<td height="35" align="left" valign="top"><label>6</label></td>
+											<td height="35" align="left" valign="top"><input type="text" name="txtChequeFrom" id="txtChequeFrom" style="width:220px;" /></td>
+											<td align="left" valign="top">
+												<select id="ddlChequeFrom" name="ddlChequeFrom" style="width:100px;">
+													<option value="V">Varchar</option>
+													<option value="N">Numeric</option>
+													<option value="D">Date</option>
+												</select>
+											</td>
+											<td height="35" align="left" valign="top"><label><input type="text" name="txtChequeFromLength" id="txtChequeFromLength" style="width:20px;" /></label></td>
+										</tr>
+										 <tr>
+											<td align="left" valign="top"><label>33</label></td>
+											<td align="left" valign="top"><label>Issue Date</label></td>
+											<td align="left" valign="top"><label>Date</label></td>
+											<td height="35" align="left" valign="top"><label>10</label></td>
+											<td align="left" valign="top"><input type="text" name="txtIssueDate" id="txtIssueDate" style="width:220px;" /></td>
+											<td align="left" valign="top">
+												<select id="ddlIssueDate" name="ddlIssueDate" style="width:100px;">
+													<option value="V">Varchar</option>
+													<option value="N">Numeric</option>
+													<option value="D">Date</option>
+												</select>
+											</td>
+											<td height="35" align="left" valign="top"><label><input type="text" name="txtIssueDateLength" id="txtIssueDateLength" style="width:20px;" /></label></td>
+										</tr>
+									   
+										<tr>
+										  <td align="left" valign="top">&nbsp;</td>
+										  <td align="left" valign="top">&nbsp;</td>
+										  <td align="left" valign="top">&nbsp;</td>
+										  <td align="left" valign="top">&nbsp;</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,10 @@
+ALTER TABLE `tb_uploadingdata` ADD `branch_sub_code` VARCHAR(10) NULL DEFAULT NULL AFTER `cps_product_code`;
+ALTER TABLE `tb_print_req_collection` ADD `branch_sub_code` VARCHAR(10) NULL DEFAULT NULL AFTER `cps_product_code`;
+ALTER TABLE `tb_reprint_req_collection` ADD `branch_sub_code` VARCHAR(10) NULL DEFAULT NULL AFTER `cps_product_code`;
+ALTER TABLE `tb_printque` ADD `branch_sub_code` VARCHAR(10) NULL DEFAULT NULL AFTER `cps_product_code`;
+ALTER TABLE `tb_pending_print_req` ADD `branch_sub_code` VARCHAR(10) NULL DEFAULT NULL AFTER `cps_product_code`;
+ALTER TABLE `tb_cps_reprintque` ADD `branch_sub_code` VARCHAR(10) NULL DEFAULT NULL AFTER `cps_product_code`;
+
+ALTER TABLE `tb_cps_chequeseries` ADD `branch_sub_code` VARCHAR(10) NULL DEFAULT NULL AFTER `serise_Bank`;
+
+ALTER TABLE `tb_branchdetails` ADD `branch_sub_code` VARCHAR(10) NOT NULL AFTER `branch_tollfree_no`;

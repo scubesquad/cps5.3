@@ -1,0 +1,119 @@
+9
+
+dir
+862
+svn://192.168.2.8/svnrepos/cps/trunk/scripts/ckeditor/plugins
+svn://192.168.2.8/svnrepos
+
+
+
+2012-03-01T05:27:12.781250Z
+203
+vinod
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+0
+
+find
+dir
+
+pastetext
+dir
+
+pagebreak
+dir
+
+div
+dir
+
+image
+dir
+
+iframedialog
+dir
+
+scayt
+dir
+
+styles
+dir
+
+a11yhelp
+dir
+
+forms
+dir
+
+table
+dir
+
+liststyle
+dir
+
+pastefromword
+dir
+
+wsc
+dir
+
+flash
+dir
+
+link
+dir
+
+colordialog
+dir
+
+templates
+dir
+
+clipboard
+dir
+
+dialog
+dir
+
+smiley
+dir
+
+autogrow
+dir
+
+tabletools
+dir
+
+tableresize
+dir
+
+about
+dir
+
+uicolor
+dir
+
+showblocks
+dir
+
+specialchar
+dir
+

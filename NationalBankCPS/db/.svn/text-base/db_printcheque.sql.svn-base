@@ -1,0 +1,481 @@
+-- phpMyAdmin SQL Dump
+-- version 3.4.5
+-- http://www.phpmyadmin.net
+--
+-- Host: localhost
+-- Generation Time: Jan 23, 2012 at 07:23 AM
+-- Server version: 5.5.16
+-- PHP Version: 5.3.8
+
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+--
+-- Database: `db_printcheque`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_bankdetails`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_bankdetails` (
+  `bank_id` int(250) NOT NULL,
+  `bank_name` varchar(40) NOT NULL,
+  `bank_code` varchar(10) NOT NULL,
+  `bank_address1` text NOT NULL,
+  `bank_city1` int(11) NOT NULL,
+  `bank_pin1` int(11) NOT NULL,
+  `bank_address2` varchar(500) NOT NULL,
+  `bank_city2` int(11) NOT NULL,
+  `bank_pin2` varchar(20) NOT NULL,
+  `bank_telephone1` varchar(20) NOT NULL,
+  `bank_telephone2` varchar(20) NOT NULL,
+  `bank_ifsccode` varchar(20) NOT NULL,
+  `bank_mobile` varchar(20) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_bankdetails`
+--
+
+INSERT INTO `tb_bankdetails` (`bank_id`, `bank_name`, `bank_code`, `bank_address1`, `bank_city1`, `bank_pin1`, `bank_address2`, `bank_city2`, `bank_pin2`, `bank_telephone1`, `bank_telephone2`, `bank_ifsccode`, `bank_mobile`) VALUES
+(1, 'sfsd', 'sdf', 'sdfsdfsdf', 123, 123, 'qwewe', 123, 'wqeqwe', 'qwe', 'qwe', 'weqwe', 'qwe');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_branchdetails`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_branchdetails` (
+  `branch_id` int(200) NOT NULL AUTO_INCREMENT,
+  `branch_name` varchar(100) NOT NULL,
+  `branch_micrcode` varchar(10) NOT NULL,
+  `branch_micr` varchar(10) NOT NULL,
+  `branch_fullmicr` varchar(10) NOT NULL,
+  `branch_atparmicrcode` varchar(10) NOT NULL,
+  `branch_soleid` varchar(15) NOT NULL,
+  `branch_alphacode` varchar(15) NOT NULL,
+  `branch_address1` varchar(250) NOT NULL,
+  `branch_city1` int(11) NOT NULL,
+  `branch_pin1` int(15) NOT NULL,
+  `branch_address2` varchar(1000) NOT NULL,
+  `branch_city2` int(11) NOT NULL,
+  `branch_pin2` varchar(15) NOT NULL,
+  `branch_telephone1` int(11) NOT NULL,
+  `branch_telephone2` int(11) NOT NULL,
+  `branch_contactperson1` varchar(50) NOT NULL,
+  `branch_contactperson2` varchar(50) NOT NULL,
+  `branch_contactpersonmobile1` int(11) NOT NULL,
+  `branch_contactpersonmobile2` int(11) NOT NULL,
+  `branch_email1` varchar(30) NOT NULL,
+  `branch_email2` varchar(30) NOT NULL,
+  `branch_website` varchar(30) NOT NULL,
+  `branch_holiday` varchar(20) NOT NULL,
+  `branch_neftifsccode` varchar(20) NOT NULL,
+  PRIMARY KEY (`branch_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `tb_branchdetails`
+--
+
+INSERT INTO `tb_branchdetails` (`branch_id`, `branch_name`, `branch_micrcode`, `branch_micr`, `branch_fullmicr`, `branch_atparmicrcode`, `branch_soleid`, `branch_alphacode`, `branch_address1`, `branch_city1`, `branch_pin1`, `branch_address2`, `branch_city2`, `branch_pin2`, `branch_telephone1`, `branch_telephone2`, `branch_contactperson1`, `branch_contactperson2`, `branch_contactpersonmobile1`, `branch_contactpersonmobile2`, `branch_email1`, `branch_email2`, `branch_website`, `branch_holiday`, `branch_neftifsccode`) VALUES
+(1, 'test branch', '001', '0222', '891723', '3123', '123', '234234', 'test address1', 0, 234234, 'test address2', 0, '123123', 123123123, 123123123, 'cont 1', 'cont 2', 123123123, 123123123, 'a@b.com', 'a@b.com', 'qwe.com', 'dddd.com', '12312312');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_cps_mapfields`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_cps_mapfields` (
+  `id` int(20) NOT NULL AUTO_INCREMENT,
+  `cps_city_code` int(5) NOT NULL,
+  `cps_bank_code` int(20) NOT NULL,
+  `cps_branch_code` int(20) NOT NULL,
+  `cps_branch_soleID` int(20) NOT NULL,
+  `cps_micr_account_no` int(20) NOT NULL,
+  `cps_tr_code` int(20) NOT NULL,
+  `cps_act_name` varchar(30) NOT NULL,
+  `cps_act_jointname1` varchar(30) NOT NULL,
+  `cps_act_jointname2` varchar(30) NOT NULL,
+  `cps_auth_sign1` varchar(30) NOT NULL,
+  `cps_auth_sign2` varchar(30) NOT NULL,
+  `cps_auth_sign3` varchar(30) NOT NULL,
+  `cps_act_address1` varchar(100) NOT NULL,
+  `cps_act_address2` varchar(100) NOT NULL,
+  `cps_act_address3` varchar(100) NOT NULL,
+  `cps_act_address4` varchar(100) NOT NULL,
+  `cps_act_address5` varchar(100) NOT NULL,
+  `cps_act_city` int(10) NOT NULL,
+  `cps_act_pin` int(15) NOT NULL,
+  `cps_act_telephone_res` int(15) NOT NULL,
+  `cps_act_telephone_off` int(15) NOT NULL,
+  `cps_act_mobile` int(15) NOT NULL,
+  `cps_no_of_books` int(5) NOT NULL,
+  `cps_book_size` int(5) NOT NULL,
+  `cps_dly_bearer_order` varchar(15) NOT NULL,
+  `cps_atpar` varchar(5) NOT NULL,
+  `cps_pr_code` int(10) NOT NULL,
+  `cps_chq_no_from` int(100) NOT NULL,
+  `cps_chq_no_to` int(100) NOT NULL,
+  `cps_effective_date` varchar(20) NOT NULL,
+  `cps_issue_date` varchar(20) NOT NULL,
+  `cps_sr_no_infra` int(5) NOT NULL,
+  `cps_alpha_code` varchar(10) NOT NULL,
+  `cps_spectial_series` int(50) NOT NULL,
+  `cps_ifsc_code` varchar(5) NOT NULL,
+  `cps_rtgs_code` varchar(5) NOT NULL,
+  `cps_neft_code` varchar(5) NOT NULL,
+  `cps_unique_req` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_cps_settings`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_cps_settings` (
+  `inputfolderpath` varchar(100) NOT NULL,
+  `inputfileformat` varchar(20) NOT NULL,
+  `inputfiledelimiter` varchar(2) NOT NULL,
+  `outputfolderpath` varchar(100) NOT NULL,
+  `outputfileformat` varchar(20) NOT NULL,
+  `outputfiledelimiter` varchar(2) NOT NULL,
+  `typeofprinter` varchar(20) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_mapfield`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_mapfield` (
+  `id` int(20) NOT NULL AUTO_INCREMENT,
+  `city_code` varchar(30) NOT NULL,
+  `bank_code` varchar(30) NOT NULL,
+  `branch_code` varchar(30) NOT NULL,
+  `branch_soleID` varchar(30) NOT NULL,
+  `micr_account_no` varchar(30) NOT NULL,
+  `tr_code` varchar(30) NOT NULL,
+  `cust_name` varchar(30) NOT NULL,
+  `joint_name1` varchar(30) NOT NULL,
+  `joint_name2` varchar(30) NOT NULL,
+  `signatory1` varchar(30) NOT NULL,
+  `signatory2` varchar(30) NOT NULL,
+  `signatory3` varchar(30) NOT NULL,
+  `cust_address1` varchar(30) NOT NULL,
+  `cust_address2` varchar(30) NOT NULL,
+  `cust_address3` varchar(30) NOT NULL,
+  `cust_address4` varchar(30) NOT NULL,
+  `cust_address5` varchar(30) NOT NULL,
+  `cust_city` varchar(30) NOT NULL,
+  `cust_pin` varchar(30) NOT NULL,
+  `cust_telephone_res` varchar(30) NOT NULL,
+  `cust_telephone_off` varchar(30) NOT NULL,
+  `cust_mobile` varchar(30) NOT NULL,
+  `no_of_books` varchar(30) NOT NULL,
+  `book_size` varchar(30) NOT NULL,
+  `bearer_order` varchar(30) NOT NULL,
+  `atpar` varchar(30) NOT NULL,
+  `pr_code` varchar(30) NOT NULL,
+  `chq_no_fronm` varchar(30) NOT NULL,
+  `chq_no_to` varchar(30) NOT NULL,
+  `effective_date` varchar(30) NOT NULL,
+  `issue_date` varchar(30) NOT NULL,
+  `sr_no_infra` varchar(30) NOT NULL,
+  `alpha_code` varchar(30) NOT NULL,
+  `spectial_series` varchar(30) NOT NULL,
+  `f6` varchar(30) NOT NULL,
+  `f7` varchar(30) NOT NULL,
+  `f8` varchar(30) NOT NULL,
+  `f9` varchar(30) NOT NULL,
+  `new40` varchar(30) NOT NULL,
+  `unique_req` varchar(30) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `tb_mapfield`
+--
+
+INSERT INTO `tb_mapfield` (`id`, `city_code`, `bank_code`, `branch_code`, `branch_soleID`, `micr_account_no`, `tr_code`, `cust_name`, `joint_name1`, `joint_name2`, `signatory1`, `signatory2`, `signatory3`, `cust_address1`, `cust_address2`, `cust_address3`, `cust_address4`, `cust_address5`, `cust_city`, `cust_pin`, `cust_telephone_res`, `cust_telephone_off`, `cust_mobile`, `no_of_books`, `book_size`, `bearer_order`, `atpar`, `pr_code`, `chq_no_fronm`, `chq_no_to`, `effective_date`, `issue_date`, `sr_no_infra`, `alpha_code`, `spectial_series`, `f6`, `f7`, `f8`, `f9`, `new40`, `unique_req`) VALUES
+(1, 'CityCode', 'BankCode', 'BranchCode', 'BranchSoleId', 'MIRCAccNo', 'TRCOde', 'CustName', 'JointName1', 'JointName2', 'Signatory1', 'Signatory2', 'Signatory3', 'CustAdd1', 'CustAdd2', 'CustAdd3', 'CustAdd4', 'CustAdd5', 'CustCIty', 'CustPin', 'CustPhoneRes', 'CustPhoneOff', 'Custmobile', 'NoOfBooks', 'BookSize', 'BearerOrder', 'Atpar', 'PRCode', 'ChqNoFrom', 'ChqNoTo', 'EffectiveDate', 'EssueDate', 'SrNoInfra', 'AlphaCode', 'SpectialSerise', 'F6', 'F7', 'F8', 'F9', 'New40', 'UniqueReq');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_pending_print_req`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_pending_print_req` (
+  `id` int(20) NOT NULL AUTO_INCREMENT,
+  `cps_city_code` int(5) NOT NULL,
+  `cps_bank_code` int(20) NOT NULL,
+  `cps_branch_code` int(20) NOT NULL,
+  `cps_branch_soleID` int(20) NOT NULL,
+  `cps_micr_account_no` int(20) NOT NULL,
+  `cps_tr_code` int(20) NOT NULL,
+  `cps_act_name` varchar(30) NOT NULL,
+  `cps_act_jointname1` varchar(30) NOT NULL,
+  `cps_act_jointname2` varchar(30) NOT NULL,
+  `cps_auth_sign1` varchar(30) NOT NULL,
+  `cps_auth_sign2` varchar(30) NOT NULL,
+  `cps_auth_sign3` varchar(30) NOT NULL,
+  `cps_act_address1` varchar(100) NOT NULL,
+  `cps_act_address2` varchar(100) NOT NULL,
+  `cps_act_address3` varchar(100) NOT NULL,
+  `cps_act_address4` varchar(100) NOT NULL,
+  `cps_act_address5` varchar(100) NOT NULL,
+  `cps_act_city` int(10) NOT NULL,
+  `cps_act_pin` int(15) NOT NULL,
+  `cps_act_telephone_res` int(15) NOT NULL,
+  `cps_act_telephone_off` int(15) NOT NULL,
+  `cps_act_mobile` int(15) NOT NULL,
+  `cps_no_of_books` int(5) NOT NULL,
+  `cps_book_size` int(5) NOT NULL,
+  `cps_dly_bearer_order` varchar(15) NOT NULL,
+  `cps_atpar` varchar(5) NOT NULL,
+  `cps_pr_code` int(10) NOT NULL,
+  `cps_chq_no_from` int(100) NOT NULL,
+  `cps_chq_no_to` int(100) NOT NULL,
+  `cps_effective_date` varchar(20) NOT NULL,
+  `cps_issue_date` varchar(20) NOT NULL,
+  `cps_sr_no_infra` int(5) NOT NULL,
+  `cps_alpha_code` varchar(10) NOT NULL,
+  `cps_spectial_series` int(50) NOT NULL,
+  `cps_ifsc_code` varchar(5) NOT NULL,
+  `cps_rtgs_code` varchar(5) NOT NULL,
+  `cps_neft_code` varchar(5) NOT NULL,
+  `cps_unique_req` varchar(50) NOT NULL,
+  `cps_isprint` int(5) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+
+--
+-- Dumping data for table `tb_pending_print_req`
+--
+
+INSERT INTO `tb_pending_print_req` (`id`, `cps_city_code`, `cps_bank_code`, `cps_branch_code`, `cps_branch_soleID`, `cps_micr_account_no`, `cps_tr_code`, `cps_act_name`, `cps_act_jointname1`, `cps_act_jointname2`, `cps_auth_sign1`, `cps_auth_sign2`, `cps_auth_sign3`, `cps_act_address1`, `cps_act_address2`, `cps_act_address3`, `cps_act_address4`, `cps_act_address5`, `cps_act_city`, `cps_act_pin`, `cps_act_telephone_res`, `cps_act_telephone_off`, `cps_act_mobile`, `cps_no_of_books`, `cps_book_size`, `cps_dly_bearer_order`, `cps_atpar`, `cps_pr_code`, `cps_chq_no_from`, `cps_chq_no_to`, `cps_effective_date`, `cps_issue_date`, `cps_sr_no_infra`, `cps_alpha_code`, `cps_spectial_series`, `cps_ifsc_code`, `cps_rtgs_code`, `cps_neft_code`, `cps_unique_req`, `cps_isprint`) VALUES
+(9, 2, 3, 4, 5, 6, 7, 'Test Name', 'Joint Name1', 'Joint Name2', '11', '12', '13', 'add1', 'add2', 'add3', 'add4', 'add5', 0, 400058, 25784932, 27519754, 2147483647, 24, 25, '26', '27', 28, 29, 30, '31', '32', 33, '34', 35, '36', '37', '', '41', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_printadmin`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_printadmin` (
+  `username` varchar(50) NOT NULL,
+  `password` varchar(50) NOT NULL,
+  `lastlogintime` datetime NOT NULL,
+  `adminid` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`adminid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+
+--
+-- Dumping data for table `tb_printadmin`
+--
+
+INSERT INTO `tb_printadmin` (`username`, `password`, `lastlogintime`, `adminid`) VALUES
+('21232f297a57a5a743894a0e4a801fc3', '21232f297a57a5a743894a0e4a801fc3', '2011-12-21 00:00:00', 1),
+('22c276a05aa7c90566ae2175bcc2a9b0', '37261bb25a58da2a79a8f845be770f4e', '2012-01-12 00:00:00', 3),
+('22c276a05aa7c90566ae2175bcc2a9b0', '22c276a05aa7c90566ae2175bcc2a9b0', '2012-01-12 00:00:00', 4),
+('4124bc0a9335c27f086f24ba207a4912', '3691308f2a4c2f6983f2880d32e29c84', '2012-01-12 00:00:00', 5),
+('sanket', '81c6fa745434534c4a9633ad8c08506a', '2012-01-22 05:05:53', 6),
+('s', '03c7c0ace395d80182db07ae2c30f034', '2012-01-22 05:07:59', 7),
+('s', '03c7c0ace395d80182db07ae2c30f034', '2012-01-22 05:08:20', 8),
+('s', '03c7c0ace395d80182db07ae2c30f034', '2012-01-22 00:00:00', 9),
+('a', '0cc175b9c0f1b6a831c399e269772661', '2012-01-22 00:00:00', 10),
+('d', '8277e0910d750195b448797616e091ad', '2012-01-22 00:00:00', 11),
+('ert', '0cc175b9c0f1b6a831c399e269772661', '2012-01-22 00:00:00', 12);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_printque`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_printque` (
+  `id` int(20) NOT NULL AUTO_INCREMENT,
+  `cps_city_code` int(5) NOT NULL,
+  `cps_bank_code` int(20) NOT NULL,
+  `cps_branch_code` int(20) NOT NULL,
+  `cps_branch_soleID` int(20) NOT NULL,
+  `cps_micr_account_no` int(20) NOT NULL,
+  `cps_tr_code` int(20) NOT NULL,
+  `cps_act_name` varchar(30) NOT NULL,
+  `cps_act_jointname1` varchar(30) NOT NULL,
+  `cps_act_jointname2` varchar(30) NOT NULL,
+  `cps_auth_sign1` varchar(30) NOT NULL,
+  `cps_auth_sign2` varchar(30) NOT NULL,
+  `cps_auth_sign3` varchar(30) NOT NULL,
+  `cps_act_address1` varchar(100) NOT NULL,
+  `cps_act_address2` varchar(100) NOT NULL,
+  `cps_act_address3` varchar(100) NOT NULL,
+  `cps_act_address4` varchar(100) NOT NULL,
+  `cps_act_address5` varchar(100) NOT NULL,
+  `cps_act_city` int(10) NOT NULL,
+  `cps_act_pin` int(15) NOT NULL,
+  `cps_act_telephone_res` int(15) NOT NULL,
+  `cps_act_telephone_off` int(15) NOT NULL,
+  `cps_act_mobile` int(15) NOT NULL,
+  `cps_no_of_books` int(5) NOT NULL,
+  `cps_book_size` int(5) NOT NULL,
+  `cps_dly_bearer_order` varchar(15) NOT NULL,
+  `cps_atpar` varchar(5) NOT NULL,
+  `cps_pr_code` int(10) NOT NULL,
+  `cps_chq_no_from` int(100) NOT NULL,
+  `cps_chq_no_to` int(100) NOT NULL,
+  `cps_effective_date` varchar(20) NOT NULL,
+  `cps_issue_date` varchar(20) NOT NULL,
+  `cps_sr_no_infra` int(5) NOT NULL,
+  `cps_alpha_code` varchar(10) NOT NULL,
+  `cps_spectial_series` int(50) NOT NULL,
+  `cps_ifsc_code` varchar(5) NOT NULL,
+  `cps_rtgs_code` varchar(5) NOT NULL,
+  `cps_neft_code` varchar(5) NOT NULL,
+  `cps_unique_req` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_print_req_collection`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_print_req_collection` (
+  `id` int(20) NOT NULL AUTO_INCREMENT,
+  `cps_city_code` int(5) NOT NULL,
+  `cps_bank_code` int(20) NOT NULL,
+  `cps_branch_code` int(20) NOT NULL,
+  `cps_branch_soleID` int(20) NOT NULL,
+  `cps_micr_account_no` int(20) NOT NULL,
+  `cps_tr_code` int(20) NOT NULL,
+  `cps_act_name` varchar(30) NOT NULL,
+  `cps_act_jointname1` varchar(30) NOT NULL,
+  `cps_act_jointname2` varchar(30) NOT NULL,
+  `cps_auth_sign1` varchar(30) NOT NULL,
+  `cps_auth_sign2` varchar(30) NOT NULL,
+  `cps_auth_sign3` varchar(30) NOT NULL,
+  `cps_act_address1` varchar(100) NOT NULL,
+  `cps_act_address2` varchar(100) NOT NULL,
+  `cps_act_address3` varchar(100) NOT NULL,
+  `cps_act_address4` varchar(100) NOT NULL,
+  `cps_act_address5` varchar(100) NOT NULL,
+  `cps_act_city` int(10) NOT NULL,
+  `cps_act_pin` int(15) NOT NULL,
+  `cps_act_telephone_res` int(15) NOT NULL,
+  `cps_act_telephone_off` int(15) NOT NULL,
+  `cps_act_mobile` int(15) NOT NULL,
+  `cps_no_of_books` int(5) NOT NULL,
+  `cps_book_size` int(5) NOT NULL,
+  `cps_dly_bearer_order` varchar(15) NOT NULL,
+  `cps_atpar` varchar(5) NOT NULL,
+  `cps_pr_code` int(10) NOT NULL,
+  `cps_chq_no_from` int(100) NOT NULL,
+  `cps_chq_no_to` int(100) NOT NULL,
+  `cps_effective_date` varchar(20) NOT NULL,
+  `cps_issue_date` varchar(20) NOT NULL,
+  `cps_sr_no_infra` int(5) NOT NULL,
+  `cps_alpha_code` varchar(10) NOT NULL,
+  `cps_spectial_series` int(50) NOT NULL,
+  `cps_ifsc_code` varchar(5) NOT NULL,
+  `cps_rtgs_code` varchar(5) NOT NULL,
+  `cps_neft_code` varchar(5) NOT NULL,
+  `cps_unique_req` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_reprintadmin`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_reprintadmin` (
+  `username` varchar(50) NOT NULL,
+  `password` varchar(50) NOT NULL,
+  `lastlogintime` datetime NOT NULL,
+  `adminid` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`adminid`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_test`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_test` (
+  `id` int(200) NOT NULL AUTO_INCREMENT,
+  `name` varchar(1000) NOT NULL,
+  `address` varchar(1000) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_uploadingdata`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_uploadingdata` (
+  `id` int(20) NOT NULL AUTO_INCREMENT,
+  `cps_city_code` int(5) NOT NULL,
+  `cps_bank_code` int(20) NOT NULL,
+  `cps_branch_code` int(20) NOT NULL,
+  `cps_branch_soleID` int(20) NOT NULL,
+  `cps_micr_account_no` int(20) NOT NULL,
+  `cps_tr_code` int(20) NOT NULL,
+  `cps_act_name` varchar(30) NOT NULL,
+  `cps_act_jointname1` varchar(30) NOT NULL,
+  `cps_act_jointname2` varchar(30) NOT NULL,
+  `cps_auth_sign1` varchar(30) NOT NULL,
+  `cps_auth_sign2` varchar(30) NOT NULL,
+  `cps_auth_sign3` varchar(30) NOT NULL,
+  `cps_act_address1` varchar(100) NOT NULL,
+  `cps_act_address2` varchar(100) NOT NULL,
+  `cps_act_address3` varchar(100) NOT NULL,
+  `cps_act_address4` varchar(100) NOT NULL,
+  `cps_act_address5` varchar(100) NOT NULL,
+  `cps_act_city` int(10) NOT NULL,
+  `cps_act_pin` int(15) NOT NULL,
+  `cps_act_telephone_res` int(15) NOT NULL,
+  `cps_act_telephone_off` int(15) NOT NULL,
+  `cps_act_mobile` int(15) NOT NULL,
+  `cps_no_of_books` int(5) NOT NULL,
+  `cps_book_size` int(5) NOT NULL,
+  `cps_dly_bearer_order` varchar(15) NOT NULL,
+  `cps_atpar` varchar(5) NOT NULL,
+  `cps_pr_code` int(10) NOT NULL,
+  `cps_chq_no_from` int(100) NOT NULL,
+  `cps_chq_no_to` int(100) NOT NULL,
+  `cps_effective_date` varchar(20) NOT NULL,
+  `cps_issue_date` varchar(20) NOT NULL,
+  `cps_sr_no_infra` int(5) NOT NULL,
+  `cps_alpha_code` varchar(10) NOT NULL,
+  `cps_spectial_series` int(50) NOT NULL,
+  `cps_ifsc_code` varchar(5) NOT NULL,
+  `cps_rtgs_code` varchar(5) NOT NULL,
+  `cps_neft_code` varchar(5) NOT NULL,
+  `cps_unique_req` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

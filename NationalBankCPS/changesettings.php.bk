@@ -1,0 +1,307 @@
+<?php  require_once('global.php');
+$jq = true;
+$ui = true;
+$form = true;
+$valid = true;
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<?php include('includes.php'); ?>
+<script type="text/javascript">
+	var vRules = {};
+	var vMessages = {};
+	$(document).ready(function() {
+		$('#response,#ajax_loading,.loading').hide();
+		$('#submit').button();		
+	
+		$('#frmSettings').validate({
+			rules: vRules,
+			messages: vMessages,
+			submitHandler: function(form) {
+				$('#frmSettings').ajaxSubmit({target: '#response', beforeSubmit: function (formData, jqForm, options) {
+						formData.push({ "name": "type", "value": "json" });
+						$('.loading').show();
+					}, clearForm: false, dataType: 'json', success: function (resObj, statusText) {
+						if (resObj.status) {
+								window.location = resObj.loc;
+						} else {	
+							$('.loading').hide();
+							$('#response').html('<div class="errormsg_boundary">'+resObj.htmlcontent+'<div>').show();
+						}
+					}
+				});
+			}
+		});
+	});
+	
+	function showchkno(showval){
+		if(showval == "bank"){
+			document.getElementById("divchkno").style.display = "none";
+		}
+		else if(showval == "chkno"){
+			document.getElementById("divchkno").style.display = "block";
+		} 
+	}
+	
+</script>
+
+</head>
+
+<body>
+<?php require_once('header.php');	?>
+<div id="formdiv">
+<div id="formheading">CPS Settings</div>
+<div id="formfields">
+<?php
+$row_settings = $db->get_row("select * from `tb_cps_settings");
+?>
+<form id="frmSettings" name="frmSettings" action="post_installstep4.php" method="post" enctype="multipart/form-data">
+<table width="100%" border="0" cellspacing="0" cellpadding="0"
+	style="border: 1px solid; border-color: #cccccc;">
+	<tr>
+		<td align="left" valign="top"
+			style="padding-left: 16px; padding-top: 16px;">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td height="35" align="left" valign="top"><label>Input Folder</label></td>
+				<td align="left" valign="top">
+					<input type="text" name="txtInputFolder" id="txtInputFolder" style="width: 220px;" value = "<?php echo $row_settings->inputfolderpath; ?>" />&nbsp;<label>(Ex. D:\Folder Name)</label>
+				</td>
+			</tr>
+			<tr>
+				<td width="15%" height="35" align="left" valign="top"><label>Input File Format</label></td>
+				<td width="85%" align="left" valign="top">
+					<select name="ddlFileFormat" id="ddlFileFormat" style="width: 220px;" >
+						<option value = "Excel2003">Excel - 2003</option>
+						<option value = "Excel2007">Excel - 2007</option>
+						<option value = "XML">XML</option>
+						<option value = "ASCII">ASCII</option>
+						<option value = "CSV">CSV</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td height="35" align="left" valign="top"><label>Input File
+				Delimiter</label></td>
+				<td align="left" valign="top">
+					<select name="ddlInputDelimiter" id="ddlInputDelimiter" style="width: 220px;" >
+						<option value="Colon">, (Colon)</option>
+						<option value="SemiColon" >; (SemiColon)</option>
+						<option value="Tab">Tab Delimited</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td height="35" align="left" valign="top"><label>Output Folder</label></td>
+				<td align="left" valign="top">
+					<input type="text" name="txtOutputFolder" id="txtOutputFolder" style="width: 220px;" value = "<?php echo $row_settings->outputfolderpath; ?>" />
+				</td>
+			</tr>
+			<tr>
+				<td height="35" align="left" valign="top"><label>Output File Format</label></td>
+				<td align="left" valign="top">
+					<select name="ddlOutputFileFormat" id="ddlOutputFileFormat" style="width: 220px;" >
+						<option value = "Excel2003">Excel - 2003</option>
+						<option value = "Excel2007">Excel - 2007</option>
+						<option value = "XML">XML</option>
+						<option value = "ASCII">ASCII</option>
+						<option value = "CSV">CSV</option>
+					</select>
+					</td>
+			</tr>
+			<tr>
+				<td height="35" align="left" valign="top"><label>Output File
+				Delimiter</label></td>
+				<td align="left" valign="top">
+					<select name="ddlOutputDelimiter" id="ddlOutputDelimiter" style="width: 220px;" >
+						<option value="Colon">, (Colon)</option>
+						<option value="SemiColon" >; (SemiColon)</option>
+						<option value="Tab">Tab Delimited</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td height="35" align="left" valign="top"><label>Type of Printer
+				</label></td>
+				<td align="left" valign="top">
+					<select name="ddlTypeOfPrinter" id="ddlTypeOfPrinter" style="width: 220px;" >
+						<option value="C3300">Canon 3300</option>
+						<option value="L260">Lexmark 260DN</option>
+						<option value="L460">Lexmark 460DN</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td align="left" valign="top"><label>No. Of Users</label></td>
+				<td align="left" valign="top">
+					<input type="text" name="txtnoofusers" id="txtnoofusers" value="" style="width: 220px;" value = "<?php echo $row_settings->inputfolderpath; ?>"/>
+				</td>
+			</tr>
+			<tr>
+				<td align="left" valign="top" colspan="2" style="padding-top:10px" class="name" >
+					<form>
+						<input type="radio" name="chk1" value="" onClick="showchkno('chkno')">Cheque NO.
+						<input type="radio" name="chk1" value="" onClick="showchkno('bank')">Bank provide
+					</form>
+				</td>
+			</tr>
+			<tr>
+				<td align="left" valign="top" colspan="2"  style="padding-top:13px">
+					<div id="divchkno" style="display:none"> 
+						<table width="100%" border="0" cellspacing="0" cellpadding="0">
+							<tr>
+								<td align="left" valign="top" width="15%" height="35px">
+									<label>Cheque No. From</label>
+								</td>
+								<td align="left" valign="top" width="85%">
+									<input type="text" name="txtchqnofrom" id="txtchqnofrom" value="" style="width: 220px;" value = "<?php echo $row_settings->inputfolderpath; ?>" />
+								</td>
+							</tr>
+							<tr>
+								<td align="left" valign="top" width="15%">
+									<label>Cheque No. To</label>
+								</td>
+								<td align="left" valign="top" width="85%">
+									<input type="text" name="txtchqnoto" id="txtchqnoto" value="" style="width: 220px;" value = "<?php echo $row_settings->inputfolderpath; ?>" />
+								</td>
+							</tr>
+						</table>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td height="35" align="left" valign="top"><label>No of failed password attempt</label></td>
+				<td align="left" valign="top">
+					<input type="text" name="txtnooffailedpasswordattempt" id="txtnooffailedpasswordattempt" style="width: 220px;" value = "<?php echo $row_settings->nooffailedpasswordattempt; ?>" />&nbsp;<label>(Password will automatically expire after it.)</label>
+				</td>
+			</tr>
+			<tr>
+				<td height="35" align="left" valign="top"><label>Password Auto Expire</label></td>
+				<td align="left" valign="top">
+					<input type="text" name="txtpassword_expiry" id="txtpassword_expiry" style="width: 220px;" value = "<?php echo $row_settings->password_expiry; ?>" />&nbsp;<label>days (Password will expire after specified days)</label>
+				</td>
+			</tr>
+			<tr>
+				<td height="35" align="left" valign="top"><label>Home Screen Text</label></td>
+				<td align="left" valign="top">
+					<input type="text" name="txthomescreen_text" id="txthomescreen_text" style="width: 220px;" value = "<?php echo $row_settings->homescreen_text; ?>" />&nbsp;<label> (Text to show on home page)</label>
+				</td>
+			</tr>
+			<tr>
+				<td height="35" align="left" valign="top"><label>Auto Lock</label></td>
+				<td align="left" valign="top">
+					<input type="text" name="txtautolockminutes" id="txtautolockminutes" style="width: 220px;" value = "<?php echo $row_settings->autolockminutes; ?>" />&nbsp;<label> (Minutes after login user will be logged out.)</label>
+				</td>
+			</tr>
+			<tr>
+				<td height="35" align="left" valign="top"><label>Powered by</label></td>
+				<td align="left" valign="top">
+					<input type="text" name="txtpoweredby" id="txtpoweredby" style="width: 220px;" value = "<?php echo $row_settings->poweredby; ?>" />&nbsp;<label> </label>
+				</td>
+			</tr>
+			<tr>
+				<td height="35" align="left" valign="top"><label>Image Logo</label></td>
+				<td align="left" valign="top">
+					<input type="file" name="banklogo" id="banklogo" /> 
+				</td>
+			</tr>
+			<tr>
+				<td height="35" align="left" valign="top"><label>Select Country</label></td>
+				<td align="left" valign="top">
+					<select name="ddlcountry" id="ddlcountry" style="width:190px; height:26px;" >
+						<option value="0"> Select Country</option>
+						<?php $rowgetcountry =  $db->get_results("select * from tb_countrymaster");?>
+						<?php foreach($rowgetcountry as $eachcountry):?>
+						<option value="<?php echo $eachcountry->country_id; ?>" <?php if(stripslashes($eachcountry->country_id)== $row_settings->country){echo "Selected";} ?>><?php echo $eachcountry->country_name; ?></option>
+						<?php endforeach;?>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				&nbsp;
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+				<label><h3>HelpLine</h3></label>
+				<hr/>
+				
+				</td>
+			</tr>
+			<tr>
+				<td>
+				&nbsp;
+				</td>
+			</tr>
+			<tr>
+				<td height="35" align="left" valign="top"><label>Employee ID</label></td>
+				<td align="left" valign="top">
+					<input type="text" name="txthelp_employeeid" id="txthelp_employeeid" style="width: 220px;" value = "<?php echo $row_settings->help_employeeid; ?>" />&nbsp;<label> </label>
+				</td>
+			</tr>
+			<tr>
+				<td height="35" align="left" valign="top"><label>Contact Person</label></td>
+				<td align="left" valign="top">
+					<input type="text" name="txthelp_contactperson" id="txthelp_contactperson" style="width: 220px;" value = "<?php echo $row_settings->help_contactperson; ?>" />&nbsp;<label> </label>
+				</td>
+			</tr>
+			<tr>
+				<td height="35" align="left" valign="top"><label>Helpline No 1</label></td>
+				<td align="left" valign="top">
+					<input type="text" name="txthelp_helplineno1" id="txthelp_helplineno1" style="width: 220px;" value = "<?php echo $row_settings->help_helplineno1; ?>" />&nbsp;<label> </label>
+				</td>
+			</tr>
+			<tr>
+				<td height="35" align="left" valign="top"><label>Helpline No 2</label></td>
+				<td align="left" valign="top">
+					<input type="text" name="txthelp_helplineno2" id="txthelp_helplineno2" style="width: 220px;" value = "<?php echo $row_settings->help_helplineno2; ?>" />&nbsp;<label> </label>
+				</td>
+			</tr>
+			<tr>
+				<td height="35" align="left" valign="top"><label>Email ID</label></td>
+				<td align="left" valign="top">
+					<input type="text" name="txthelp_emailid" id="txthelp_emailid" style="width: 220px;" value = "<?php echo $row_settings->help_emailid; ?>" />&nbsp;<label> </label>
+				</td>
+			</tr>
+			<tr>
+            	<td>
+            		<div class="loading"><img src="<?php echo ROOT_IMAGES; ?>ajax-loader.gif" /></div>
+            		<div id="response"></div>
+            	</td>
+            </tr>
+			<tr>
+				<td align="left" valign="top">&nbsp;</td>
+				<td align="right" valign="top" style="padding-right: 16px;">&nbsp;</td>
+			</tr>
+			<tr>
+				<td>
+				</td>
+				<td align="left" valign="top">
+					<input type="submit" name="submitSave" id="submitSave" value="Save" class="submitbutton" />&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" name="submitSavenClose" id="submitSavenClose" value="Save and Close" class="submitbutton" />&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" name="submitDiscard" id="submitDiscard" value="Discard" class="submitbutton" onclick="window.location='home.php'" />&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" name="submitGotoHome" id="submitGotoHome" value="Go to Home" class="submitbutton" onclick="window.location='home.php'"  />
+				</td>
+			</tr>
+			<tr>
+				<td align="left" valign="top">&nbsp;</td>
+				<td align="right" valign="top" style="padding-right: 16px;">&nbsp;</td>
+			</tr>
+			<tr>
+				<td align="left" valign="top">&nbsp;</td>
+				<td align="right" valign="top" style="padding-right: 16px;">&nbsp;</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+</table>
+</form>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

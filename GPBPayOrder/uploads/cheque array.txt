@@ -1,0 +1,31 @@
+﻿$firstchequerow[0] = $chequeno
+1 = $citycode
+2 = $rowresults->cps_micr_code 
+3 = $rowresults->cps_branch_code 
+4 = $rowresults->cps_micr_account_no
+5 = $rowresults->cps_account_no
+6 = $rowresults->cps_tr_code
+7 = $rowresults->cps_act_name
+8 = $rowresults->cps_act_address1
+9 = $rowresults->cps_act_city
+10 = $rowresults->cps_act_pin
+
+if join name 1 is not blank, then
+11 = $name1 //joint name 1  
+12 = $name2 //joint name 2
+13 = $name3 //blank
+else
+11 = $name1 //authorised sign 1  
+12 = $name2 //authorised sign 2
+13 = $name3 //authorised sign 3
+
+14 = $branchDetails->branch_address1
+15 = $branchDetails->branch_address2
+16 = $branchDetails->suburb_name
+17 = $branchDetails->city_place
+18 = $branchDetails->suburb_postal_code
+19 = $branchDetails->branch_neftifsccode
+20 = $branchDetails->branch_name
+21 = $rowresultslips->cps_auth_sign1
+22 = $rowresultslips->branch_neftifsccode
+23 = $rowresults->cps_branchmicr_code		

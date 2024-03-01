@@ -1,0 +1,542 @@
+<?php
+require_once('global.php');
+require('cellpdf.php');
+$page_name = "print_preview";
+authentication_print();
+ini_set("max_execution_time",30000);
+?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<?php include('includes.php'); ?>
+</head>
+<body>
+<?php require_once('header.php');	?>
+<div id="formdiv">
+	<div id="formheading">Re - Print Cheques</div>
+	<div id="formfields">
+
+		<?php 
+		
+		// Vinod Sharma Coding Starts
+		if($resultnoofchequeleavestype = $db->get_results("SELECT DISTINCT cps_book_size FROM tb_cps_reprintque"))
+		{
+			$branchDetails = $db->get_row("SELECT branch.branch_name,branch.branch_address1,branch.branch_address2,suburb_name,city_place,suburb_postal_code,branch.branch_neftifsccode,branch.branch_printers FROM tb_branchdetails branch LEFT JOIN tb_suburbmaster suburb ON branch.branch_suburb_id = suburb.suburb_id LEFT JOIN tb_citymaster city ON branch.branch_city_id = city.city_id");
+			$printersinfo = "";
+
+			if(!empty($branchDetails->branch_printers)){
+				$printersinfo = unserialize($branchDetails->branch_printers);
+			}
+			else
+			{
+				echo "Please enter printer details in branch master";
+			}
+			$countnoofchequetype = count($resultnoofchequeleavestype);
+			/* 
+			 * Data Sequence in ChequeData
+			 * 1)Cheque Number 2)Center Code 3)Bank Code 4)Branch Code 5)MICR Account No 6)Account No 7)Transaction Code 8)Account Name 9)Address 10)City 11)Pin
+			*/
+			$firstchequerow = array();
+			$secondchequerow = array();
+			$thirdchequerow = array();
+			
+			$firstrequestsliprow = array();
+			$secondrequestsliprow = array();
+			$thirdrequestsliprow = array();
+			
+			
+			$singlefirstchequerow = array();
+			$singlesecondchequerow = array();
+			$singlethirdchequerow = array();
+			foreach($resultnoofchequeleavestype as $rownoofcheque)
+			{
+				
+				$result = $db->get_results("SELECT * FROM tb_cps_reprintque WHERE cps_book_size = ".$rownoofcheque->cps_book_size);
+				$totalnoofsamechequesize = count($result);
+				//$matchingsets = round(($totalnoofsamechequesize/3), 0, PHP_ROUND_HALF_DOWN);
+				$matchingsets = floor($totalnoofsamechequesize/3);
+				$counterset = 1;
+				
+				foreach($result as $rowresults)
+				{
+					$chequeno = $rowresults->cps_chq_no_from; 
+					$citycode = $rowresults->cps_city_code;
+					if(trim($rowresults->cps_act_jointname1)!="")
+					{
+						$name1 = $rowresults->cps_act_jointname1;
+						$name2 = $rowresults->cps_act_jointname2;
+						$name3 = "";
+					}
+					else
+					{
+						$name1 = $rowresults->cps_auth_sign1;
+						$name2 = $rowresults->cps_auth_sign2;
+						$name3 = $rowresults->cps_auth_sign3;
+					}
+					if($rowresults->cps_atpar == 1)
+					{
+						$citycode = "000";
+					}
+					
+					if($counterset <= $matchingsets * 3)
+					{
+						for($i=0;$i<$rownoofcheque->cps_book_size ; $i++)
+						{
+							if($i!=0)
+								$chequeno = $chequeno + 1;
+								
+							$chequeno = str_pad($chequeno, 6, "0", STR_PAD_LEFT);	
+							
+							if($counterset % 3 == 1) 
+							{
+								$firstchequerow[] = array($chequeno,$citycode,$rowresults->cps_bank_code,$rowresults->cps_branch_code,$rowresults->cps_micr_account_no,$rowresults->cps_account_no,$rowresults->cps_tr_code,$rowresults->cps_act_name,$rowresults->cps_act_address1,$rowresults->cps_act_city,$rowresults->cps_act_pin,$name1,$name2,$name3,$branchDetails->branch_address1,$branchDetails->branch_address2,$branchDetails->suburb_name,$branchDetails->city_place,$branchDetails->suburb_postal_code,$branchDetails->branch_neftifsccode);
+								$firstrequestsliprow[] = array($rowresults->cps_act_name,$rowresults->cps_act_address1,$rowresults->cps_act_address2,$rowresults->cps_act_address3,$rowresults->cps_act_city,$rowresults->cps_act_pin,$rowresults->cps_state,$rowresults->cps_country,$rowresults->cps_act_telephone_res,$rowresults->cps_act_telephone_off,$rowresults->cps_act_mobile,$rowresults->cps_account_no,$rowresults->cps_emailid,$rowresults->cps_book_size,$rowresults->cps_chq_no_from,$rowresults->cps_chq_no_to,$branchDetails->branch_address1,$branchDetails->branch_address2,$branchDetails->suburb_name,$branchDetails->city_place,$branchDetails->suburb_postal_code,$branchDetails->branch_neftifsccode);
+							}
+							elseif($counterset % 3 == 2 )
+							{
+								$secondchequerow[] = array($chequeno,$citycode,$rowresults->cps_bank_code,$rowresults->cps_branch_code,$rowresults->cps_micr_account_no,$rowresults->cps_account_no,$rowresults->cps_tr_code,$rowresults->cps_act_name,$rowresults->cps_act_address1,$rowresults->cps_act_city,$rowresults->cps_act_pin,$name1,$name2,$name3,$branchDetails->branch_address1,$branchDetails->branch_address2,$branchDetails->suburb_name,$branchDetails->city_place,$branchDetails->suburb_postal_code,$branchDetails->branch_neftifsccode);
+								$secondrequestsliprow[] = array($rowresults->cps_act_name,$rowresults->cps_act_address1,$rowresults->cps_act_address2,$rowresults->cps_act_address3,$rowresults->cps_act_city,$rowresults->cps_act_pin,$rowresults->cps_state,$rowresults->cps_country,$rowresults->cps_act_telephone_res,$rowresults->cps_act_telephone_off,$rowresults->cps_act_mobile,$rowresults->cps_account_no,$rowresults->cps_emailid,$rowresults->cps_book_size,$rowresults->cps_chq_no_from,$rowresults->cps_chq_no_to,$branchDetails->branch_address1,$branchDetails->branch_address2,$branchDetails->suburb_name,$branchDetails->city_place,$branchDetails->suburb_postal_code,$branchDetails->branch_neftifsccode);
+							}
+							elseif($counterset % 3 == 0) {
+								$thirdchequerow[] = array($chequeno,$citycode,$rowresults->cps_bank_code,$rowresults->cps_branch_code,$rowresults->cps_micr_account_no,$rowresults->cps_account_no,$rowresults->cps_tr_code,$rowresults->cps_act_name,$rowresults->cps_act_address1,$rowresults->cps_act_city,$rowresults->cps_act_pin,$name1,$name2,$name3,$branchDetails->branch_address1,$branchDetails->branch_address2,$branchDetails->suburb_name,$branchDetails->city_place,$branchDetails->suburb_postal_code,$branchDetails->branch_neftifsccode);
+								$thirdrequestsliprow[] = array($rowresults->cps_act_name,$rowresults->cps_act_address1,$rowresults->cps_act_address2,$rowresults->cps_act_address3,$rowresults->cps_act_city,$rowresults->cps_act_pin,$rowresults->cps_state,$rowresults->cps_country,$rowresults->cps_act_telephone_res,$rowresults->cps_act_telephone_off,$rowresults->cps_act_mobile,$rowresults->cps_account_no,$rowresults->cps_emailid,$rowresults->cps_book_size,$rowresults->cps_chq_no_from,$rowresults->cps_chq_no_to,$branchDetails->branch_address1,$branchDetails->branch_address2,$branchDetails->suburb_name,$branchDetails->city_place,$branchDetails->suburb_postal_code,$branchDetails->branch_neftifsccode);
+								
+								
+								// Start Printing First Lot
+								if($i == ($rownoofcheque->cps_book_size - 1))
+								{
+									for($j = 0;$j<count($firstchequerow);$j++)
+									{
+										$firstchequedata = implode("~",$firstchequerow[$j]);
+										$secondchequedata = implode("~",$secondchequerow[$j]);
+										$thirdchequedata = implode("~",$thirdchequerow[$j]);
+										
+										$firstrequestslipdata = implode("~",$firstrequestsliprow[$j]);
+										$secondrequestslipdata = implode("~",$secondrequestsliprow[$j]);
+										$thirdrequestslipdata = implode("~",$thirdrequestsliprow[$j]);
+										
+										
+										
+										if($j==0)
+										{
+											printRequestSlip(2,$firstrequestslipdata,$secondrequestslipdata,$thirdrequestslipdata,3,$printersinfo);
+											//break;
+										}
+										
+										printCheques(3,$firstchequedata,$secondchequedata,$thirdchequedata,3,$printersinfo);
+									//	break;
+									}
+									$firstchequerow = array();
+									$secondchequerow = array();
+									$thirdchequerow = array();
+								}
+							}
+						}
+						
+					}
+					else
+					{
+						for($i=0;$i<$rownoofcheque->cps_book_size ; $i++)
+						{
+							
+							if($i!=0)
+								$chequeno = $chequeno + 1;
+							
+							$chequeno = str_pad($chequeno, 6, "0", STR_PAD_LEFT);
+							if($i % 3 == 0) 
+							{
+								$singlefirstchequerow[] = array($chequeno,$citycode,$rowresults->cps_bank_code,$rowresults->cps_branch_code,$rowresults->cps_micr_account_no,$rowresults->cps_account_no,$rowresults->cps_tr_code,$rowresults->cps_act_name,$rowresults->cps_act_address1,$rowresults->cps_act_city,$rowresults->cps_act_pin,$name1,$name2,$name3,$branchDetails->branch_address1,$branchDetails->branch_address2,$branchDetails->suburb_name,$branchDetails->city_place,$branchDetails->suburb_postal_code,$branchDetails->branch_neftifsccode);
+								$firstrequestsliprow[0] = array($rowresults->cps_act_name,$rowresults->cps_act_address1,$rowresults->cps_act_address2,$rowresults->cps_act_address3,$rowresults->cps_act_city,$rowresults->cps_act_pin,$rowresults->cps_state,$rowresults->cps_country,$rowresults->cps_act_telephone_res,$rowresults->cps_act_telephone_off,$rowresults->cps_act_mobile,$rowresults->cps_account_no,$rowresults->cps_emailid,$rowresults->cps_book_size,$rowresults->cps_chq_no_from,$rowresults->cps_chq_no_to,$branchDetails->branch_address1,$branchDetails->branch_address2,$branchDetails->suburb_name,$branchDetails->city_place,$branchDetails->suburb_postal_code,$branchDetails->branch_neftifsccode);
+								
+							}
+							elseif($i % 3 == 1) 
+							{
+								$singlesecondchequerow[] = array($chequeno,$citycode,$rowresults->cps_bank_code,$rowresults->cps_branch_code,$rowresults->cps_micr_account_no,$rowresults->cps_account_no,$rowresults->cps_tr_code,$rowresults->cps_act_name,$rowresults->cps_act_address1,$rowresults->cps_act_city,$rowresults->cps_act_pin,$name1,$name2,$name3,$branchDetails->branch_address1,$branchDetails->branch_address2,$branchDetails->suburb_name,$branchDetails->city_place,$branchDetails->suburb_postal_code,$branchDetails->branch_neftifsccode);
+							}
+							elseif($i % 3 == 2) 
+							{
+								$singlethirdchequerow[] = array($chequeno,$citycode,$rowresults->cps_bank_code,$rowresults->cps_branch_code,$rowresults->cps_micr_account_no,$rowresults->cps_account_no,$rowresults->cps_tr_code,$rowresults->cps_act_name,$rowresults->cps_act_address1,$rowresults->cps_act_city,$rowresults->cps_act_pin,$name1,$name2,$name3,$branchDetails->branch_address1,$branchDetails->branch_address2,$branchDetails->suburb_name,$branchDetails->city_place,$branchDetails->suburb_postal_code,$branchDetails->branch_neftifsccode);
+							}
+							
+							if($i == ($rownoofcheque->cps_book_size - 1))
+							{
+								$firstchequerow = $singlefirstchequerow;
+								$secondchequerow = $singlesecondchequerow;
+								$thirdchequerow = $singlethirdchequerow;
+								$noofCheque = 0;
+								for($j = 0;$j<count($firstchequerow);$j++)
+								{
+									$firstchequedata = implode("~",$singlefirstchequerow[$j]);
+									if($singlesecondchequerow[$j]!="" && $singlethirdchequerow[$j]!="" )
+									{
+										$secondchequedata = implode("~",$singlesecondchequerow[$j]);
+										$thirdchequedata = implode("~",$singlethirdchequerow[$j]);
+										$noofCheque = 3;
+									}
+									elseif($singlesecondchequerow[$j]!="")
+									{
+										$secondchequedata = implode("~",$singlesecondchequerow[$j]);
+										$noofCheque = 2;
+									}
+									elseif($singlethirdchequerow[$j]!="")
+									{
+										$secondchequedata = implode("~",$singlesecondchequerow[$j]);
+										$thirdchequedata = implode("~",$singlethirdchequerow[$j]);
+										$thirdchequedata = "";
+										$noofCheque = 3;
+									}
+									else
+									{
+										$secondchequedata = "";
+										$thirdchequedata = "";
+										$noofCheque = 1;
+									}
+									$firstrequestslipdata = implode("~",$firstrequestsliprow[0]);
+									$secondrequestslipdata = "";
+									$thirdrequestslipdata = "";
+									
+									if($j==0)
+									{
+										printRequestSlip(2,$firstrequestslipdata,$secondrequestslipdata,$thirdrequestslipdata,1,$printersinfo);
+									}
+									printCheques(3,$firstchequedata,$secondchequedata,$thirdchequedata,$noofCheque,$printersinfo);
+									//break;
+									
+								}
+								$firstchequerow = array();
+								$secondchequerow = array();
+								$thirdchequerow = array();
+								$singlefirstchequerow = array();
+								$singlesecondchequerow = array();
+								$singlethirdchequerow = array();
+							}
+						}
+					}
+					
+					$counterset++;
+					insertIntoPrintCollection($rowresults);
+				}
+			}
+		}
+		else
+		{
+			echo "No Records Left For Printing";
+		}
+		
+		function insertIntoPrintCollection($results)
+		{
+			global $db;
+			
+			//Insert data into print collection (Successfully printed records)
+			
+			$sqlinsertquery = "INSERT INTO tb_print_req_collection 
+				(cps_unique_req,cps_micr_code,cps_branchmicr_code,cps_account_no,cps_act_name,cps_no_of_books,cps_dly_bearer_order,cps_book_size,cps_tr_code,cps_atpar,cps_act_jointname1,cps_act_jointname2,cps_auth_sign1,cps_auth_sign2,cps_auth_sign3,cps_act_address1,cps_act_address2,cps_act_city,cps_state,cps_country,cps_emailid,cps_act_pin,cps_act_telephone_res,cps_act_telephone_off,cps_act_mobile,cps_ifsc_code,cps_chq_no_from,cps_chq_no_to,cps_micr_account_no,cps_date,cps_process_user_id,cps_is_reprint)
+				VALUES
+				('".$results->cps_unique_req ."','".$results->cps_micr_code ."','".$results->cps_branchmicr_code ."','".$results->cps_account_no ."','".$results->cps_act_name ."','".$results->cps_no_of_books ."','".$results->cps_dly_bearer_order ."','".$results->cps_book_size ."','".$results->cps_tr_code ."','".$results->cps_atpar ."','".$results->cps_act_jointname1 ."','".$results->cps_act_jointname2 ."','".$results->cps_auth_sign1 ."','".$results->cps_auth_sign2 ."','".$results->cps_auth_sign3 ."','".$results->cps_act_address1 ."','".$results->cps_act_address2 ."','".$results->cps_act_city ."','".$results->cps_state ."','".$results->cps_country ."','".$results->cps_emailid ."','".$results->cps_act_pin ."','".$results->cps_act_telephone_res ."','".$results->cps_act_telephone_off ."','".$results->cps_act_mobile ."','".$results->cps_ifsc_code ."','".$results->cps_chq_no_from ."','".$results->cps_chq_no_to ."','".$results->cps_micr_account_no ."','".$results->cps_date ."','".$results->cps_process_user_id ."',1)";
+			$db->query($sqlinsertquery);				
+			
+			$deletefromprintque = "DELETE FROM tb_cps_reprintque WHERE id=".$results->id ."";
+			$db->query($deletefromprintque);	
+		}
+					
+		function printRequestSlip($type,$firstchequedata,$secondchequedata,$thirdchequedata,$noOfRequestSlip,$printersinfo)
+		{
+			global $db;
+			
+			$rowrequestslip = $db->get_row("SELECT * FROM tb_cps_requestslip");
+			$bankDetails = $db->get_row("SELECT bank_name FROM tb_bankdetails");
+			$arrFirstRequestSlip = explode("~",$firstchequedata);
+			$arrSecondRequestSlip = explode("~",$secondchequedata);
+			$arrThirdRequestSlip = explode("~",$thirdchequedata);
+			//$arrrequestSlipBankData = explode("~",$requestSlipBankData);
+
+			//exit;
+			
+			//First request slip
+			$pdf = new FPDF();
+			$pdf->AddPage();
+			$pdf->SetFont('Arial','B',7);
+			$pdf->Text(10,8,$bankDetails->bank_name);
+			$pdf->SetFont('Arial','',6);
+			$pdf->Text(10,11,$arrFirstRequestSlip[16]);
+			$pdf->Text(10,14,$arrFirstRequestSlip[17] .', '.$arrFirstRequestSlip[19]." ".$arrFirstRequestSlip[20]);
+			$pdf->SetFont('Arial','B',8);
+			$pdf->Text(25,19,'A/c. No. : '.$arrFirstRequestSlip[11]);
+			$pdf->SetFont('Arial','',8);
+			$pdf->Text(25,22,$arrFirstRequestSlip[0]);
+			$pdf->Text(25,25,$arrFirstRequestSlip[1]);
+			$pdf->Text(25,28,$arrFirstRequestSlip[2]);
+			$pdf->Text(25,31,$arrFirstRequestSlip[4]."  ".$arrFirstRequestSlip[5]);
+			$pdf->Text(25,34,$arrFirstRequestSlip[6]." ".$arrFirstRequestSlip[7]);
+			$pdf->Text(25,37,'(R)');
+			$pdf->Text(25,40,'(O)');
+			$pdf->Text(25,43,'(W)');
+			$firstno = $arrFirstRequestSlip[8] > 0 ? $arrFirstRequestSlip[8] : "";
+			$secondno = $arrFirstRequestSlip[9] > 0 ? $arrFirstRequestSlip[9] : "";
+			$thirdno = $arrFirstRequestSlip[10] > 0 ? $arrFirstRequestSlip[10] : "";
+			$pdf->Text(30,37,$firstno);
+			$pdf->Text(30,40,$secondno);
+			$pdf->Text(30,43,$thirdno);
+			$pdf->Text(15,53,"If undelivered return to :- ");
+			$pdf->Text(15,56,$bankDetails->bank_name);
+			$pdf->Text(15,59,$arrFirstRequestSlip[16]);
+			$pdf->Text(15,62,$arrFirstRequestSlip[17]);
+			$pdf->Text(15,65,"".$arrFirstRequestSlip[19]." ".$arrFirstRequestSlip[20]."");
+			
+			
+			$pdf->SetFont('Arial','B',8);
+			$pdf->Text(101,7,'CHEQUE BOOK REQUEST (BANK COPY)');
+			$pdf->Text(167,9,'DATE : ___________');
+			$pdf->SetFont('Arial','B',7);
+			$pdf->Text(91,10,'THE MANAGER');
+			$pdf->Text(91,13,$bankDetails->bank_name);
+			$pdf->SetFont('Arial','',5);
+			$pdf->Text(91,15,$arrFirstRequestSlip[16].", ".$arrFirstRequestSlip[17].", ".$arrFirstRequestSlip[18].", ".$arrFirstRequestSlip[19].", ".$arrFirstRequestSlip[20]);
+			$pdf->SetFont('Arial','B',9);
+			$pdf->Text(91,25,'Cheque No. From  '.$arrFirstRequestSlip[14].'      To   '.$arrFirstRequestSlip[15]);
+			$pdf->Text(91,30,'Please issue______Cheque books containing______Leaves');
+			$pdf->Text(91,35,'Characteristics:          Bearer       Order ');
+			$pdf->Image(dirname(__FILE__)."\images\checkbox.png",136,33);
+			$pdf->Image(dirname(__FILE__)."\images\checkbox.png",150,33);
+			$pdf->Text(91,40,'Cheque Book  :          Normal       Payable At Par ');
+			$pdf->Text(91,45,'A/c No.:                 '.$arrFirstRequestSlip[11]);
+			
+			$pdf->SetFont('Arial','',8);
+			$pdf->Text(91,54,$arrFirstRequestSlip[0]);
+			$pdf->Text(91,57,$arrFirstRequestSlip[1]);
+			$pdf->Text(91,60,$arrFirstRequestSlip[2]);
+			$pdf->Text(91,63,$arrFirstRequestSlip[4]."  ".$arrFirstRequestSlip[5]);
+			$pdf->Text(91,66,$arrFirstRequestSlip[6]." ".$arrFirstRequestSlip[7]);
+			
+			
+			$pdf->Text(91,69,'Contact No.:     '.$firstno.'    '.$secondno.'    '.$thirdno);
+			$pdf->SetFont('Arial','B',8);
+			$pdf->Text(91,85,"Signature of Bearer");
+			//$pdf->Text(145,78,$arrFirstRequestSlip[0]);
+			$pdf->SetFont('Arial','',8);
+			$pdf->Text(151,85,"Signature Vertified/Authorised");
+			
+			if($noOfRequestSlip>1)
+			{
+				$pdf->SetFont('Arial','',7);
+				$pdf->Text(10,101,$bankDetails->bank_name);
+				$pdf->SetFont('Arial','',6);
+				$pdf->Text(10,104,$arrSecondRequestSlip[16]);
+				$pdf->Text(10,107,$arrSecondRequestSlip[17] .', '.$arrSecondRequestSlip[19]." ".$arrSecondRequestSlip[20]);
+				$pdf->SetFont('Arial','B',8);
+				$pdf->Text(25,112,'A/c. No. : '.$arrSecondRequestSlip[11]);
+				$pdf->SetFont('Arial','',8);
+				$pdf->Text(25,115,$arrSecondRequestSlip[0]);
+				$pdf->Text(25,118,$arrSecondRequestSlip[1]);
+				$pdf->Text(25,121,$arrSecondRequestSlip[2]);
+				$pdf->Text(25,124,$arrSecondRequestSlip[4]."  ".$arrSecondRequestSlip[5]);
+				$pdf->Text(25,127,$arrSecondRequestSlip[6]." ".$arrSecondRequestSlip[7]);
+				$pdf->Text(25,130,'(R)');
+				$pdf->Text(25,133,'(O)');
+				$pdf->Text(25,136,'(W)');
+				
+				$firstno = $arrSecondRequestSlip[8] > 0 ? $arrSecondRequestSlip[8] : "";
+				$secondno = $arrSecondRequestSlip[9] > 0 ? $arrSecondRequestSlip[9] : "";
+				$thirdno = $arrSecondRequestSlip[10] > 0 ? $arrSecondRequestSlip[10] : "";
+			
+				$pdf->Text(30,130,$firstno);
+				$pdf->Text(30,133,$secondno);
+				$pdf->Text(30,136,$thirdno);
+				$pdf->Text(15,151,"If undelivered return to :- ");
+				$pdf->Text(15,154,$bankDetails->bank_name);
+				$pdf->Text(15,157,$arrSecondRequestSlip[16]);
+				$pdf->Text(15,160,$arrSecondRequestSlip[17]);
+				$pdf->Text(15,163,"".$arrSecondRequestSlip[19]." ".$arrSecondRequestSlip[20]."");
+				
+				
+				$pdf->SetFont('Arial','B',8);
+				$pdf->Text(101,102,'CHEQUE BOOK REQUEST (BANK COPY)');
+				$pdf->Text(167,104,'DATE : ___________');
+				$pdf->SetFont('Arial','B',7);
+				$pdf->Text(91,105,'THE MANAGER');
+				$pdf->Text(91,108,$bankDetails->bank_name);
+				$pdf->SetFont('Arial','',5);
+				$pdf->Text(91,111,$arrSecondRequestSlip[16].", ".$arrSecondRequestSlip[17].", ".$arrSecondRequestSlip[18].", ".$arrSecondRequestSlip[19].", ".$arrSecondRequestSlip[20]);
+				$pdf->SetFont('Arial','B',9);
+				$pdf->Text(91,121,'Cheque No. From  '.$arrSecondRequestSlip[14].'      To   '.$arrSecondRequestSlip[15]);
+				$pdf->Text(91,126,'Please issue______Cheque books containing______Leaves');
+				$pdf->Text(91,131,'Characteristics:          Bearer       Order ');
+				$pdf->Image(dirname(__FILE__)."\images\checkbox.png",136,129);
+				$pdf->Image(dirname(__FILE__)."\images\checkbox.png",150,129);
+				$pdf->Text(91,136,'Cheque Book  :          Normal       Payable At Par ');
+				$pdf->Text(91,141,'A/c No.:                 '.$arrSecondRequestSlip[11]);
+				
+				$pdf->SetFont('Arial','',8);
+				$pdf->Text(91,150,$arrSecondRequestSlip[0]);
+				$pdf->Text(91,153,$arrSecondRequestSlip[1]);
+				$pdf->Text(91,156,$arrSecondRequestSlip[2]);
+				$pdf->Text(91,159,$arrSecondRequestSlip[4]."  ".$arrSecondRequestSlip[5]);
+				$pdf->Text(91,162,$arrSecondRequestSlip[6]." ".$arrSecondRequestSlip[7]);
+				$pdf->Text(91,165,'Contact No.:     '.$firstno.'    '.$secondno.'    '.$thirdno);
+				$pdf->SetFont('Arial','B',8);
+				$pdf->Text(91,180,"Signature of Bearer");
+				//$pdf->Text(145,173,$arrSecondRequestSlip[0]);	
+				$pdf->SetFont('Arial','',8);
+				$pdf->Text(151,180,"Signature Vertified/Authorised");
+				
+				
+				$firstno = $arrThirdRequestSlip[8] > 0 ? $arrThirdRequestSlip[8] : "";
+				$secondno = $arrThirdRequestSlip[9] > 0 ? $arrThirdRequestSlip[9] : "";
+				$thirdno = $arrThirdRequestSlip[10] > 0 ? $arrThirdRequestSlip[10] : "";
+				
+				$pdf->SetFont('Arial','B',7);
+				$pdf->Text(10,195,$bankDetails->bank_name);
+				$pdf->SetFont('Arial','',6);
+				$pdf->Text(10,198,$arrThirdRequestSlip[16]);
+				$pdf->Text(10,201,$arrThirdRequestSlip[17] .', '.$arrThirdRequestSlip[19]." ".$arrThirdRequestSlip[20]);
+				$pdf->SetFont('Arial','B',8);
+				$pdf->Text(25,206,'A/c. No. : '.$arrThirdRequestSlip[11]);
+				$pdf->SetFont('Arial','',8);
+				$pdf->Text(25,209,$arrThirdRequestSlip[0]);
+				$pdf->Text(25,212,$arrThirdRequestSlip[1]);
+				$pdf->Text(25,215,$arrThirdRequestSlip[2]);
+				$pdf->Text(25,218,$arrThirdRequestSlip[4]."  ".$arrThirdRequestSlip[5]);
+				$pdf->Text(25,221,$arrThirdRequestSlip[6]." ".$arrThirdRequestSlip[7]);
+				$pdf->Text(25,224,'(R)');
+				$pdf->Text(25,227,'(O)');
+				$pdf->Text(25,230,'(W)');
+				$pdf->Text(30,224,$firstno);
+				$pdf->Text(30,227,$secondno);
+				$pdf->Text(30,230,$arrThirdRequestSlip[10]);
+				$pdf->Text(15,240,"If undelivered return to :-");
+				$pdf->Text(15,243,$bankDetails->bank_name);
+				$pdf->Text(15,246,$arrThirdRequestSlip[16]);
+				$pdf->Text(15,249,$arrThirdRequestSlip[17]);
+				$pdf->Text(15,252,"".$arrThirdRequestSlip[19]." ".$arrThirdRequestSlip[20]."");
+				
+				
+				$pdf->SetFont('Arial','B',8);
+				$pdf->Text(101,195,'CHEQUE BOOK REQUEST (BANK COPY)');
+				$pdf->Text(167,197,'DATE : ___________');
+				$pdf->SetFont('Arial','B',7);
+				$pdf->Text(91,198,'THE MANAGER');
+				$pdf->Text(91,201,$bankDetails->bank_name);
+				$pdf->SetFont('Arial','',5);
+				$pdf->Text(91,204,$arrThirdRequestSlip[16].", ".$arrThirdRequestSlip[17].", ".$arrThirdRequestSlip[18].", ".$arrThirdRequestSlip[19].", ".$arrThirdRequestSlip[20]);
+				$pdf->SetFont('Arial','B',9);
+				$pdf->Text(91,214,'Cheque No. From  '.$arrThirdRequestSlip[14].'      To   '.$arrThirdRequestSlip[15]);
+				$pdf->Text(91,219,'Please issue______Cheque books containing______Leaves');
+				$pdf->Text(91,224,'Characteristics:          Bearer       Order ');
+				$pdf->Image(dirname(__FILE__)."\images\checkbox.png",136,222);
+				$pdf->Image(dirname(__FILE__)."\images\checkbox.png",150,222);
+				$pdf->Text(91,229,'Cheque Book  :          Normal       Payable At Par ');
+				$pdf->Text(91,234,'A/c No.:                 '.$arrThirdRequestSlip[11]);
+				
+				$pdf->SetFont('Arial','',8);
+				$pdf->Text(91,243,$arrThirdRequestSlip[0]);
+				$pdf->Text(91,246,$arrThirdRequestSlip[1]);
+				$pdf->Text(91,249,$arrThirdRequestSlip[2]);
+				$pdf->Text(91,252,$arrThirdRequestSlip[4]."  ".$arrThirdRequestSlip[5]);
+				$pdf->Text(91,255,$arrThirdRequestSlip[6]." ".$arrThirdRequestSlip[7]);
+				$pdf->Text(91,258,'Contact No.:     '.$firstno.'    '.$secondno.'    '.$thirdno);
+				$pdf->SetFont('Arial','B',8);
+				$pdf->Text(91,274,"Signature of Bearer");
+				//$pdf->Text(151,267,$arrThirdRequestSlip[0]);
+				$pdf->SetFont('Arial','',8);
+				$pdf->Text(151,274,"Signature Vertified/Authorised");
+			}
+			
+			$pdf->Output("Slip.pdf",'F');
+			
+			exec("gsbatchprintc -P \"".$printersinfo[0][0]."\" -F \"".dirname(__FILE__)."\Slip.pdf\" -I \"".$printersinfo[0][1]."\" -N 1 2>&1");
+			sleep(5);
+		}
+		
+		function printCheques($type,$firstchequedata,$secondchequedata,$thirdchequedata,$noofCheque,$printersinfo)
+		{
+			global $db;
+			$sqlPrinterSettings = "SELECT printermodels.* FROM tb_cps_settings settings JOIN tb_cps_printermodels printermodels ON printermodels.model_id = settings.printermodel";
+			$rowPrinterSettings = $db->get_row($sqlPrinterSettings);
+			
+			$firstChequeCordinates = "".$rowPrinterSettings->cheque1_branchaddressline1X .":".$rowPrinterSettings->cheque1_branchaddressline1Y .":".$rowPrinterSettings->cheque1_branchaddressline2X .":".$rowPrinterSettings->cheque1_branchaddressline2Y .":".$rowPrinterSettings->cheque1_branchaddressline3X .":".$rowPrinterSettings->cheque1_branchaddressline3Y .":".$rowPrinterSettings->cheque1_accountnoX .":".$rowPrinterSettings->cheque1_accountnoY .":".$rowPrinterSettings->cheque1_accountholdernameX .":".$rowPrinterSettings->cheque1_accountholdernameY .":".$rowPrinterSettings->cheque1_authorizedsignatoryX .":".$rowPrinterSettings->cheque1_authorizedsignatoryY .":".$rowPrinterSettings->cheques_trancodeX.":".$rowPrinterSettings->cheques_micraccnoX.":".$rowPrinterSettings->cheques_sortcodeX.":".$rowPrinterSettings->cheques_chequenoX.":".$rowPrinterSettings->cheque1_micrbandY."";
+			$secondChequeCordinates = "".$rowPrinterSettings->cheque2_branchaddressline1X .":".$rowPrinterSettings->cheque2_branchaddressline1Y .":".$rowPrinterSettings->cheque2_branchaddressline2X .":".$rowPrinterSettings->cheque2_branchaddressline2Y .":".$rowPrinterSettings->cheque2_branchaddressline3X .":".$rowPrinterSettings->cheque2_branchaddressline3Y .":".$rowPrinterSettings->cheque2_accountnoX .":".$rowPrinterSettings->cheque2_accountnoY .":".$rowPrinterSettings->cheque2_accountholdernameX .":".$rowPrinterSettings->cheque2_accountholdernameY .":".$rowPrinterSettings->cheque2_authorizedsignatoryX .":".$rowPrinterSettings->cheque2_authorizedsignatoryY .":".$rowPrinterSettings->cheques_trancodeX.":".$rowPrinterSettings->cheques_micraccnoX.":".$rowPrinterSettings->cheques_sortcodeX.":".$rowPrinterSettings->cheques_chequenoX.":".$rowPrinterSettings->cheque2_micrbandY."";
+			$thirdChequeCordinates = "".$rowPrinterSettings->cheque3_branchaddressline1X .":".$rowPrinterSettings->cheque3_branchaddressline1Y .":".$rowPrinterSettings->cheque3_branchaddressline2X .":".$rowPrinterSettings->cheque3_branchaddressline2Y .":".$rowPrinterSettings->cheque3_branchaddressline3X .":".$rowPrinterSettings->cheque3_branchaddressline3Y .":".$rowPrinterSettings->cheque3_accountnoX .":".$rowPrinterSettings->cheque3_accountnoY .":".$rowPrinterSettings->cheque3_accountholdernameX .":".$rowPrinterSettings->cheque3_accountholdernameY .":".$rowPrinterSettings->cheque3_authorizedsignatoryX .":".$rowPrinterSettings->cheque3_authorizedsignatoryY .":".$rowPrinterSettings->cheques_trancodeX.":".$rowPrinterSettings->cheques_micraccnoX.":".$rowPrinterSettings->cheques_sortcodeX.":".$rowPrinterSettings->cheques_chequenoX.":".$rowPrinterSettings->cheque3_micrbandY."";
+			$font = $rowPrinterSettings->font;
+			//sleep(4);
+			//$printObj = new COM('PrintChequeTesing.Print');
+			//echo $printObj->PrintCheque($imagePath,$type,$firstchequedata,$secondchequedata,$thirdchequedata,$firstChequeCordinates,$secondChequeCordinates,$thirdChequeCordinates,$font,$noofCheque);
+			$arrFirstChequeData = explode("~",$firstchequedata);
+			$arrSecondChequeData = explode("~",$secondchequedata);
+			$arrThirdChequeData = explode("~",$thirdchequedata);
+			$micrcode = "C" . $arrFirstChequeData[0] . "C ". $arrFirstChequeData[2] . "A ". $arrFirstChequeData[4] ."C ".$arrFirstChequeData[6];
+			
+			
+			
+			$pdf = new FPDF();
+			$pdf->AddPage();
+			$pdf->SetFont('Arial','',6);
+			$pdf->Text(49,15,$arrFirstChequeData[16]." BRANCH, ".$arrFirstChequeData[14]);
+			$pdf->Text(49,17,"".$arrFirstChequeData[15].", ".$arrFirstChequeData[16].", ".$arrFirstChequeData[17]." - ".$arrFirstChequeData[18]."");
+			$pdf->SetFont('Arial','',10);
+			$pdf->SetXY(0,19);
+			$pdf->Cell(198,10,"or Bearer",'',0,'R');			
+			$pdf->SetFont('Arial','B',10);
+			$pdf->Text(35,51,'A/c. No.:  '.$arrFirstChequeData[5]);
+			$pdf->SetFont('Arial','B',8);
+			//$pdf->Text(151,50,$arrFirstChequeData[7]);
+			$pdf->SetXY(0,46);
+			$pdf->Cell(200,10,$arrFirstChequeData[7],'',0,'R');
+			$pdf->AddFont('E-13B_0','','E-13B_0.php');
+			$pdf->SetFont('E-13B_0','',12);
+			$pdf->Text(57,86,$micrcode);
+	
+			if ($noofCheque > 1)
+			{
+				$micrcode = "C" . $arrSecondChequeData[0] . "C ". $arrSecondChequeData[2] . "A ". $arrSecondChequeData[4] ."C ".$arrSecondChequeData[6];
+				$pdf->SetFont('Arial','',6);
+				$pdf->Text(49,108,$arrSecondChequeData[16]." BRANCH, ".$arrSecondChequeData[14]);
+				$pdf->Text(49,110,"".$arrSecondChequeData[15].", ".$arrSecondChequeData[16].", ".$arrSecondChequeData[17]." - ".$arrSecondChequeData[18]."");
+				$pdf->SetFont('Arial','',10);
+				$pdf->SetXY(0,112);
+				$pdf->Cell(198,10,"or Bearer",'',0,'R');
+				$pdf->SetFont('Arial','B',10);
+				$pdf->Text(35,144,'A/c. No.:  '.$arrSecondChequeData[5]);
+				$pdf->SetFont('Arial','B',8);
+				//$pdf->Text(151,143,$arrSecondChequeData[7]);
+				$pdf->SetXY(0,137);
+				$pdf->Cell(200,10,$arrSecondChequeData[7],'',0,'R');
+				$pdf->AddFont('E-13B_0','','E-13B_0.php');
+				$pdf->SetFont('E-13B_0','',12);
+				$pdf->Text(57,180,$micrcode);
+			}
+			
+			if ($noofCheque > 2)
+			{
+				$micrcode = "C" . $arrThirdChequeData[0] . "C ". $arrThirdChequeData[2] . "A ". $arrThirdChequeData[4] ."C ".$arrThirdChequeData[6];
+				$pdf->SetFont('Arial','',6);
+				$pdf->Text(49,201,$arrThirdChequeData[16]." BRANCH, ".$arrThirdChequeData[14]);
+				$pdf->Text(49,203,"".$arrThirdChequeData[15].", ".$arrThirdChequeData[16].", ".$arrThirdChequeData[17]." - ".$arrThirdChequeData[18]."");
+				$pdf->SetFont('Arial','',10);
+				$pdf->SetXY(0,205);
+				$pdf->Cell(198,10,"or Bearer",'',0,'R');
+				$pdf->SetFont('Arial','B',10);
+				$pdf->Text(35,237,'A/c. No.:  '.$arrThirdChequeData[5]);
+				$pdf->SetFont('Arial','B',8);
+				//$pdf->Text(151,237,$arrThirdChequeData[7]);
+				$pdf->SetXY(0,231);
+				$pdf->Cell(200,10,$arrThirdChequeData[7],'',0,'R');
+				$pdf->AddFont('E-13B_0','','E-13B_0.php');
+				$pdf->SetFont('E-13B_0','',12);
+				$pdf->Text(57,273,$micrcode);
+			}
+			$pdf->Output("Cheque.pdf",'F');
+			exec("gsbatchprintc -P \"".$printersinfo[0][0]."\" -F \"".dirname(__FILE__)."\Cheque.pdf\" -I \"".$printersinfo[0][2]."\" -N 1 2>&1");
+			sleep(5);
+		}
+		
+		
+		
+	//Close Database		
+	$db->closeDb();
+	?>
+	
+	</div>
+</div>
+</body>
+</html>

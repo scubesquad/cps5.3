@@ -1,0 +1,12 @@
+<?php require_once('../global.php');
+	$un = $_REQUEST['username'];
+	$pass = md5($_REQUEST['password']);	
+	$cleardatabase = "DELETE FROM tb_printadmin";
+	$db->query($cleardatabase);
+	if(isset($_REQUEST['username']) && !empty($_REQUEST['username']) && isset($_REQUEST['password']) && !empty($_REQUEST['password']) ) {
+		$sql = "INSERT INTO tb_printadmin (username,password,lastlogintime,user_type,password_status) VALUES ('".$un."','".mysql_real_escape_string($pass)."','".date('Y-m-d')."',2,1)";
+		$db->query($sql);
+	echo '{"status":"true"}';
+	exit;
+	}
+?>
